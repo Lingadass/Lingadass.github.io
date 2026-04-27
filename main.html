@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>αηιмєѕ தமிழ் — Stream Anime in Tamil</title>
+
+  <meta name="google-site-verification" content="Bs-zn-4_h5NOEnhNXeSkznOBG7yhEcJbRddoLscS0Bg" />
+
+  <meta name="description" content="Welcome to αηιмєѕ தமிழ். Watch your favourite anime dubbed & subbed in Tamil.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .home-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: calc(100vh - 200px);
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .home-hero {
+      max-width: 800px;
+    }
+
+    .home-hero h1 {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      color: var(--accent-color, #ff6b6b);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      font-weight: 900;
+    }
+
+    .home-hero p {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: var(--text-color, #fff);
+      line-height: 1.6;
+    }
+
+    .home-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary, #b0b0b0);
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .features {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-bottom: 50px;
+      margin-top: 30px;
+    }
+
+    .feature {
+      flex: 1;
+      min-width: 200px;
+      max-width: 250px;
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .feature h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      color: var(--accent-color, #ff6b6b);
+    }
+
+    .feature p {
+      font-size: 0.95rem;
+      color: var(--text-secondary, #b0b0b0);
+    }
+
+    .watch-btn {
+      display: inline-block;
+      padding: 18px 60px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ff6b6b, #ff5252);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+      border: none;
+      cursor: pointer;
+    }
+
+    .watch-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
+      background: linear-gradient(135deg, #ff5252, #ff3838);
+    }
+
+    .watch-btn:active {
+      transform: translateY(-1px);
+    }
+
+    /* SEO Content Styles */
+    .seo-content {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 0 20px;
+      text-align: left;
+    }
+
+    .seo-content h2 {
+      font-size: 2rem;
+      color: var(--text-color, #fff);
+      margin-bottom: 20px;
+      margin-top: 40px;
+      font-weight: 700;
+      border-bottom: 2px solid var(--accent-color, #ff6b6b);
+      padding-bottom: 10px;
+    }
+
+    .seo-content p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-secondary, #b0b0b0);
+      margin-bottom: 15px;
+    }
+
+    .seo-content h3 {
+      font-size: 1.3rem;
+      color: var(--accent-color, #ff6b6b);
+      margin-top: 30px;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .seo-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .seo-list li {
+      font-size: 0.95rem;
+      color: var(--text-secondary, #b0b0b0);
+      margin-bottom: 10px;
+      padding-left: 25px;
+      position: relative;
+    }
+
+    .seo-list li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent-color, #ff6b6b);
+      font-weight: bold;
+    }
+  </style>
+  <script>/* apply saved theme before paint to prevent flash */
+    (function () { var t = localStorage.getItem('animeTheme') || 'dark'; document.documentElement.setAttribute('data-theme', t); })();
+  </script>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="main.html" class="logo">αηιмєѕ தமிழ்</a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="main.html">🏠 Home</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" title="Toggle theme">☀️</button>
+  </nav>
+
+  <!-- PAGE CONTENT -->
+  <div class="page-wrapper">
+    <div class="home-container">
+      <div class="home-hero">
+        <h1>αηιмєѕ தமிழ்</h1>
+        <p>Your Gateway to Anime in Tamil</p>
+        <p class="home-subtitle">Watch premium anime dubbed & subbed in Tamil for free. Join thousands of anime fans today!</p>
+
+        <div class="features">
+          <div class="feature">
+            <div class="feature-icon">🎬</div>
+            <h3>Premium Quality</h3>
+            <p>High-definition streaming with crystal clear audio</p>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">🌍</div>
+            <h3>Tamil Language</h3>
+            <p>Dubbed and subbed content in Tamil</p>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">📺</div>
+            <h3>Latest Episodes</h3>
+            <p>New episodes added regularly</p>
+          </div>
+        </div>
+
+        <a href="index.html" class="watch-btn">▶️ Watch Now</a>
+      </div>
+    </div>
+
+    <!-- SEO CONTENT SECTION -->
+    <section class="seo-content">
+      <h2>Watch Tamil Anime Online - Free Streaming</h2>
+      
+      <p>
+        Welcome to <strong>αηιмєѕ தமிழ்</strong> - your ultimate destination to watch Tamil dubbed anime online for free. We provide premium quality streaming of popular anime series in the Tamil language. Whether you're a fan of action-packed adventures, thrilling dramas, or heartwarming stories, our extensive collection has something for everyone.
+      </p>
+
+      <p>
+        Our platform offers a seamless streaming experience with high-definition video quality and crystal-clear Tamil audio. Discover your favorite anime like <strong>Naruto, One Piece, Jujutsu Kaisen, Solo Leveling, Blue Lock, Dr Stone, Haikyuu!!, Kaiju No. 8</strong>, and many more, all available in Tamil language with proper dubbing and subtitles.
+      </p>
+
+      <h3>Why Choose αηιмєѕ தமிழ்?</h3>
+      <ul class="seo-list">
+        <li>Free streaming of latest anime episodes in Tamil</li>
+        <li>High-definition quality with perfect audio synchronization</li>
+        <li>Regularly updated with new episodes and series</li>
+        <li>User-friendly interface for easy navigation</li>
+        <li>Available on all devices - desktop, tablet, and mobile</li>
+        <li>No subscription fees or hidden charges</li>
+      </ul>
+
+      <h2>Best Tamil Anime Streaming Platform</h2>
+      <p>
+        αηιмєѕ தமிழ் is dedicated to bringing the world of anime to Tamil-speaking audiences. We understand the passion and love that anime fans have, and we're committed to providing the best viewing experience possible. Our extensive library includes trending anime, classic favorites, and the latest releases, all dubbed and subtitled in Tamil.
+      </p>
+
+      <h3>Popular Anime Available in Tamil</h3>
+      <ul class="seo-list">
+        <li>Jujutsu Kaisen - Action-packed supernatural battles</li>
+        <li>Solo Leveling - Thrilling fantasy adventure</li>
+        <li>Blue Lock - Intense sports anime with unique gameplay</li>
+        <li>Dr Stone - Science-based survival story</li>
+        <li>Kaiju No. 8 - Epic monster-fighting action</li>
+        <li>Haikyuu!! - Inspiring volleyball championship series</li>
+        <li>To Be Hero X - Adventure comedy animation</li>
+      </ul>
+
+      <h2>Smooth Streaming & Latest Episodes</h2>
+      <p>
+        Experience uninterrupted anime streaming with our optimized platform. We ensure that every episode is available in the highest quality possible, with proper Tamil dubbing and subtitles. New episodes are added regularly to keep you updated with the latest anime releases. Join thousands of Tamil anime fans who enjoy our platform daily.
+      </p>
+
+      <h3>How to Get Started?</h3>
+      <p>
+        Simply click the "Watch Now" button above to explore our complete collection of Tamil anime. Browse through our categories, use our search feature to find your favorite series, and start streaming immediately. No registration required - just click and enjoy!
+      </p>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Made with <span>♥</span> for Tamil anime fans &nbsp;|&nbsp; αηιмєѕ தமிழ்</p>
+    <p class="copyright">&copy; 2026 <span class="copy-brand">αηιмєѕ தமிழ்</span>. All rights reserved. Unauthorized
+      reproduction or distribution is prohibited.</p>
+  </footer>
+
+  <script>
+    // ─── Hamburger menu ──────────────────────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    
+    hamburger.addEventListener('click', function () {
+      navLinks.classList.toggle('active');
+      hamburger.classList.toggle('active');
+      hamburger.setAttribute('aria-expanded', navLinks.classList.contains('active'));
+    });
+
+    // Close menu when a link is clicked
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', function () {
+        navLinks.classList.remove('active');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', false);
+      });
+    });
+
+    // ─── Theme toggle ────────────────────────────────────────────────────────
+    var themeBtn = document.getElementById('themeToggle');
+    var htmlEl = document.documentElement;
+    themeBtn.textContent = htmlEl.getAttribute('data-theme') === 'light' ? '🌙' : '☀️';
+    themeBtn.addEventListener('click', function () {
+      var next = htmlEl.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      htmlEl.setAttribute('data-theme', next);
+      localStorage.setItem('animeTheme', next);
+      themeBtn.textContent = next === 'light' ? '🌙' : '☀️';
+    });
+  </script>
+
+</body>
+
+</html>
