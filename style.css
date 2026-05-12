@@ -1876,6 +1876,15 @@ html[data-theme="light"] ::-webkit-scrollbar-thumb {
   box-shadow: 0 0 14px rgba(135, 206, 235, 0.15);
 }
 
+/* Hidden display utilities for nav elements */
+#navUser,
+#navAvatarImg,
+#navAvatarInitial,
+#dropdownAvatarImg,
+#dropdownAvatarInitial {
+  display: none;
+}
+
 /* Avatar image (Google photo) */
 .nav-avatar {
   width: 32px;

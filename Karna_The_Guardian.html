@@ -1,16 +1,16 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jujutsu Kaisen Season 3 — αηιмєѕ தமிழ்</title>
-    <meta name="description" content="Watch Jujutsu Kaisen Season 3 all episodes in Tamil on αηιмєѕ தமிழ்.">
+    <title>Solo Leveling — αηιмєѕ தமிழ்</title>
+    <meta name="description" content="Watch Solo Leveling Season 1 & Season 2 all episodes in Tamil on αηιмєѕ தமிழ்.">
     <link rel="stylesheet" href="style.css">
     <script>/* apply saved theme before paint */
         (function () { var t = localStorage.getItem('animeTheme') || 'dark'; document.documentElement.setAttribute('data-theme', t); })();
     </script>
-    <style>
+        <style>
         /* Page-specific keyframes — all other styles live in style.css */
         @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
@@ -45,7 +45,7 @@
                     <button class="quality-btn" data-quality="480p">480p</button>
                     <button class="quality-btn" data-quality="360p">360p</button>
                 </div>
-                <div class="modal-ep-counter" id="epCounter">— / 9</div>
+                <div class="modal-ep-counter" id="epCounter">— / 25</div>
                 <button class="download-btn" id="downloadBtn" title="Download current episode">
                     ⬇ Download
                 </button>
@@ -65,18 +65,19 @@
         <ul class="nav-links" id="navLinks">
             <li><a href="index.html">🏠 Home</a></li>
         </ul>
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" title="Toggle theme">☀️</button>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme"
+            title="Toggle theme">☀️</button>
         <!-- Nav user / profile dropdown -->
-        <div class="nav-user" id="navUser" style="display:none;">
+        <div class="nav-user" id="navUser">
           <div class="nav-profile" id="navProfile">
-            <img class="nav-avatar" id="navAvatarImg" src="" alt="" style="display:none;">
-            <div class="nav-avatar-initial" id="navAvatarInitial" style="display:none;"></div>
+            <img class="nav-avatar" id="navAvatarImg" src="" alt="">
+            <div class="nav-avatar-initial" id="navAvatarInitial"></div>
             <span class="nav-username" id="navUsername"></span>
             <span class="nav-profile-chevron">▼</span>
             <div class="profile-dropdown" id="profileDropdown">
               <div class="profile-dropdown-header">
-                <img class="dropdown-avatar" id="dropdownAvatarImg" src="" alt="" style="display:none;">
-                <div class="dropdown-avatar-initial" id="dropdownAvatarInitial" style="display:none;"></div>
+                <img class="dropdown-avatar" id="dropdownAvatarImg" src="" alt="">
+                <div class="dropdown-avatar-initial" id="dropdownAvatarInitial"></div>
                 <div class="dropdown-user-info">
                   <div class="dropdown-name" id="dropdownName"></div>
                   <div class="dropdown-email" id="dropdownEmail"></div>
@@ -96,16 +97,16 @@
 
         <!-- SHOW HEADER -->
         <div class="show-header">
-            <img src="jjks3.jpg" alt="Jujutsu Kaisen Season 3" loading="lazy" decoding="async">
+            <img src="karna.jpg" alt="Karna: The Guardian cover" loading="lazy" decoding="async">
             <div class="show-info">
-                <h1>JUJUTSU KAISEN SEASON 3</h1>
+                <h1>KARNA: THE GUARDIAN</h1>
                 <p>
-                    Season 3 &nbsp;•&nbsp; 9 Episodes &nbsp;•&nbsp; 2026
+                    2 Seasons &nbsp;•&nbsp; 12 Episodes &nbsp;•&nbsp; 2024–2025
                 </p>
                 <div class="genre-tags">
                     <span class="genre-tag action">Action</span>
                     <span class="genre-tag anime">Anime</span>
-                    <span class="genre-tag hero">Shounen</span>
+                    <span class="genre-tag hero">Fantasy</span>
                 </div>
                 <p class="show-description">
                     Choose a season below, then click any episode to watch it right here. 🎬
@@ -117,34 +118,32 @@
         <div class="section-title">Seasons</div>
 
         <!-- SEASON ACCORDION -->
-        <div class="seasons-wrap">
-
-            <!-- Season 3 block -->
-            <div class="season-block" id="block-s3">
-                <div class="season-header" id="hdr-s3" role="button" aria-expanded="false" aria-controls="body-s3">
+        <div class="seasons-wrap" id="seasonsWrap">
+            <!-- Season 1 block -->
+            <div class="season-block" id="block-s1">
+                <div class="season-header" id="hdr-s1" role="button" aria-expanded="false" aria-controls="body-s1">
                     <div class="season-header-left">
-                        <div class="season-num-badge">3</div>
-                        <div>
-                            <div class="season-header-title">Season 3</div>
-                            <div class="season-header-meta">9 Episodes &nbsp;·&nbsp; 2026</div>
+                        <div class="season-num-badge">1</div>
+                        <div class="season-header-info">
+                            <div class="season-header-title">Season 1</div>
+                            <div class="season-header-meta">12 Episodes &nbsp;·&nbsp; 2024</div>
                         </div>
                     </div>
                     <span class="season-chevron">▼</span>
                 </div>
-                <div class="season-body" id="body-s3">
+                <div class="season-body" id="body-s1">
                     <div class="season-body-inner">
                         <div class="season-content">
                             <div class="season-cover">
-                                <img src="jjks3.jpg" alt="Jujutsu Kaisen Season 3" loading="lazy" decoding="async">
+                                <img src="karna.jpg" alt="Karna: The Guardian Season 1" loading="lazy" decoding="async">
                             </div>
                             <div class="season-episodes">
-                                <ul class="episode-list" id="episodeList"></ul>
+                                <ul class="episode-list" id="listS1"></ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
 
     </div>
@@ -157,154 +156,85 @@
     </footer>
 
     <script>
-        // ─── Episode data with multiple quality options ──────────────────────────
-        const episodes = [
-            { 
-                title: 'Jujutsu Kaisen — Season 3 Episode 1',
-                qualities: {
-                    '720p': '1ni_G0Oe1KCDQlX5h09XZVtr2wXvZZKAc',
-                    '480p': '10Kfra3SlPDcDZEaqt_16jdudp21EO2KB',
-                    '360p': '1htWBmRU5avuQUTq0tLWltP8pdJg1na3r'
-                }
-            },
-            { 
-                title: 'Jujutsu Kaisen — Season 3 Episode 2',
-                qualities: {
-                    '720p': '1vHqnT3H7HDOtqEr1rB0ikAeJYn5yrOZS',
-                    '480p': '1DMEDyIkDN0Q0kDpMy8GMheOhuNaURt_o',
-                    '360p': '1uUf4aQSmcqlyLuptzXhkQMXIO-ezj3yl'
-                }
-            },
-            { 
-                title: 'Jujutsu Kaisen — Season 3 Episode 3',
-                qualities: {
-                    '720p': '1ItHb0RLCNcj0u20IOOIFqItU2-C0SfKZ',
-                    '480p': '1kcTKomRymmZXkpHocSrpo24xtUE03zcZ',
-                    '360p': '1qmKaffReJZRVHK5d0J41sX0OJqirkPjY'
-                }
-            },
-            { 
-                title: 'Jujutsu Kaisen — Season 3 Episode 4',
-                qualities: {
-                    '720p': '1ni_G0Oe1KCDQlX5h09XZVtr2wXvZZKAc',
-                    '480p': '10Kfra3SlPDcDZEaqt_16jdudp21EO2KB',
-                    '360p': '1htWBmRU5avuQUTq0tLWltP8pdJg1na3r'
-                }
-            },
-            { 
-                title: 'Jujutsu Kaisen — Season 3 Episode 5',
-                qualities: {
-                    '720p': '1vHqnT3H7HDOtqEr1rB0ikAeJYn5yrOZS',
-                    '480p': '1DMEDyIkDN0Q0kDpMy8GMheOhuNaURt_o',
-                    '360p': '1uUf4aQSmcqlyLuptzXhkQMXIO-ezj3yl'
-                }
-            },
-            { 
-                title: 'Jujutsu Kaisen — Season 3 Episode 6',
-                qualities: {
-                    '720p': '1ItHb0RLCNcj0u20IOOIFqItU2-C0SfKZ',
-                    '480p': '1kcTKomRymmZXkpHocSrpo24xtUE03zcZ',
-                    '360p': '1qmKaffReJZRVHK5d0J41sX0OJqirkPjY'
-                }
-            },
-            { 
-                title: 'Jujutsu Kaisen — Season 3 Episode 7',
-                qualities: {
-                    '720p': '1ni_G0Oe1KCDQlX5h09XZVtr2wXvZZKAc',
-                    '480p': '10Kfra3SlPDcDZEaqt_16jdudp21EO2KB',
-                    '360p': '1htWBmRU5avuQUTq0tLWltP8pdJg1na3r'
-                }
-            },
-            { 
-                title: 'Jujutsu Kaisen — Season 3 Episode 8',
-                qualities: {
-                    '720p': '1vHqnT3H7HDOtqEr1rB0ikAeJYn5yrOZS',
-                    '480p': '1DMEDyIkDN0Q0kDpMy8GMheOhuNaURt_o',
-                    '360p': '1uUf4aQSmcqlyLuptzXhkQMXIO-ezj3yl'
-                }
-            },
-            { 
-                title: 'Jujutsu Kaisen — Season 3 Episode 9',
-                qualities: {
-                    '720p': '1ItHb0RLCNcj0u20IOOIFqItU2-C0SfKZ',
-                    '480p': '1kcTKomRymmZXkpHocSrpo24xtUE03zcZ',
-                    '360p': '1qmKaffReJZRVHK5d0J41sX0OJqirkPjY'
-                }
-            },
-
-            { 
-                title: 'Jujutsu Kaisen — Season 3 Episode 10',
-                qualities: {
-                    '720p': '1ItHb0RLCNcj0u20IOOIFqItU2-C0SfKZ',
-                    '480p': '1kcTKomRymmZXkpHocSrpo24xtUE03zcZ',
-                    '360p': '1qmKaffReJZRVHK5d0J41sX0OJqirkPjY'
-                }
-            }
+        // ─── Episode data ──────────────────────────────────────────────────────────
+        const season1 = [
+            { label: 'Karna: The Guardian — Season 1 Episode 1', url: 'https://drive.google.com/file/d/14VWDMgJv_Oa2NGFIN1x99lsaU1XwlvwV/view?usp=sharing' },
+            { label: 'Karna: The Guardian — Season 1 Episode 2', url: '' },
+            { label: 'Karna: The Guardian — Season 1 Episode 3', url: '' },
+            { label: 'Karna: The Guardian — Season 1 Episode 4', url: '' },
+            { label: 'Karna: The Guardian — Season 1 Episode 5', url: '' },
+            { label: 'Karna: The Guardian — Season 1 Episode 6', url: '' },
+            { label: 'Karna: The Guardian — Season 1 Episode 7', url: '' },
+            { label: 'Karna: The Guardian — Season 1 Episode 8', url: '' },
+            { label: 'Karna: The Guardian — Season 1 Episode 9', url: '' },
+            { label: 'Karna: The Guardian — Season 1 Episode 10', url: '' },
+            { label: 'Karna: The Guardian — Season 1 Episode 11', url: '' },
+            { label: 'Karna: The Guardian — Season 1 Episode 12', url: '' },
         ];
 
-        const total = episodes.length;
+        
+
+        const allEpisodes = [...season1];
+        const total = allEpisodes.length;
         let currentEp = 0;
-        let currentQuality = '720p';
+
+        // ─── Drive share → embed URL ───────────────────────────────────────────────
+        function embedUrl(shareUrl) {
+            const m = shareUrl.match(/\/file\/d\/([^/]+)\//);
+            return m ? `https://drive.google.com/file/d/${m[1]}/preview` : shareUrl;
+        }
 
         // ─── Build episode list ────────────────────────────────────────────────────
-        const list = document.getElementById('episodeList');
-        episodes.forEach((ep, i) => {
-            const epNum = String(i + 1).padStart(2, '0');
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <a href="#" class="ep-link" data-index="${i}" id="ep-${i}">
-                    <span class="ep-number">${epNum}</span>
-                    ${ep.title.replace('Jujutsu Kaisen — Season 3 ', '')}
-                    <span class="ep-icon">▶</span>
-                </a>`;
-            list.appendChild(li);
-        });
+        function buildList(listId, episodes, globalOffset) {
+            const ul = document.getElementById(listId);
+            episodes.forEach((ep, i) => {
+                const globalIndex = globalOffset + i;
+                const epNum = String(i + 1).padStart(2, '0');
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <a href="#" class="ep-link" data-index="${globalIndex}" id="ep-${globalIndex}">
+                        <span class="ep-number">${epNum}</span>
+                        ${ep.label}
+                        <span class="ep-icon">▶</span>
+                    </a>`;
+                ul.appendChild(li);
+            });
+        }
+
+        buildList('listS1', season1, 0);
+        
 
         // ─── Season accordion toggle ───────────────────────────────────────────────
-        document.getElementById('hdr-s3').addEventListener('click', () => {
-            const block = document.getElementById('block-s3');
-            const hdr   = document.getElementById('hdr-s3');
+        function toggleSeason(blockId, headerId) {
+            const block = document.getElementById(blockId);
+            const hdr = document.getElementById(headerId);
             const isOpen = block.classList.contains('open');
             block.classList.toggle('open', !isOpen);
             hdr.setAttribute('aria-expanded', String(!isOpen));
-        });
+        }
+
+        document.getElementById('hdr-s1').addEventListener('click', () => toggleSeason('block-s1', 'hdr-s1'));
+        
 
         // ─── Modal elements ────────────────────────────────────────────────────────
-        const modal          = document.getElementById('videoModal');
-        const iframe         = document.getElementById('modalIframe');
-        const modalTitle     = document.getElementById('modalEpTitle');
-        const epCounter      = document.getElementById('epCounter');
-        const btnPrev        = document.getElementById('btnPrev');
-        const btnNext        = document.getElementById('btnNext');
-        const btnClose       = document.getElementById('modalClose');
-        const qualityBtns    = document.querySelectorAll('.quality-btn');
-        const downloadBtn    = document.getElementById('downloadBtn');
-
-        function embedUrl(fileId) {
-            return `https://drive.google.com/file/d/${fileId}/preview`;
-        }
-
-        function updateVideoQuality(quality) {
-            currentQuality = quality;
-            const ep = episodes[currentEp];
-            const fileId = ep.qualities[quality];
-            iframe.src = embedUrl(fileId);
-            
-            // Update active quality button
-            qualityBtns.forEach(btn => btn.classList.remove('active'));
-            document.querySelector(`[data-quality="${quality}"]`).classList.add('active');
-        }
+        const modal = document.getElementById('videoModal');
+        const iframe = document.getElementById('modalIframe');
+        const modalTitle = document.getElementById('modalEpTitle');
+        const epCounter = document.getElementById('epCounter');
+        const btnPrev = document.getElementById('btnPrev');
+        const btnNext = document.getElementById('btnNext');
+        const btnClose = document.getElementById('modalClose');
+        const qualityBtns = document.querySelectorAll('.quality-btn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        let currentQuality = '720p';
 
         function openEpisode(index) {
             currentEp = index;
             currentQuality = '720p';
-            const ep = episodes[index];
-            modalTitle.textContent = ep.title;
-            epCounter.textContent  = `${index + 1} / ${total}`;
-            
-            const fileId = ep.qualities['720p'];
-            iframe.src = embedUrl(fileId);
-            
+            const ep = allEpisodes[index];
+            modalTitle.textContent = ep.label;
+            epCounter.textContent = `${index + 1} / ${total}`;
+            iframe.src = embedUrl(ep.url);
             btnPrev.disabled = index === 0;
             btnNext.disabled = index === total - 1;
             modal.classList.add('active');
@@ -327,9 +257,14 @@
         }
 
         function downloadEpisode() {
-            const ep = episodes[currentEp];
-            const fileId = ep.qualities[currentQuality];
-            const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+            const ep = allEpisodes[currentEp];
+            let urlToDL = ep.url;
+            
+            // Extract Google Drive file ID from sharing URL
+            const match = ep.url.match(/\/file\/d\/([^\/]+)\//);
+            if (match && match[1]) {
+                urlToDL = `https://drive.google.com/uc?export=download&id=${match[1]}`;
+            }
             
             downloadBtn.classList.add('loading');
             downloadBtn.textContent = '⏳ Preparing...';
@@ -337,7 +272,7 @@
             
             // Open download link
             const a = document.createElement('a');
-            a.href = downloadUrl;
+            a.href = urlToDL;
             a.target = '_blank';
             a.click();
             
@@ -350,8 +285,8 @@
         }
 
 
-        // ─── Event listeners ──────────────────────────────────────────────────
-        list.addEventListener('click', e => {
+        // ─── Event listeners ──────────────────────────────────────────────────────
+        document.addEventListener('click', e => {
             const link = e.target.closest('.ep-link');
             if (!link) return;
             e.preventDefault();
@@ -360,7 +295,9 @@
 
         qualityBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                updateVideoQuality(btn.dataset.quality);
+                currentQuality = btn.dataset.quality;
+                qualityBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
             });
         });
 
@@ -394,7 +331,7 @@
 
         // ─── Theme toggle ─────────────────────────────────────────────────────────
         var themeBtn = document.getElementById('themeToggle');
-        var htmlEl   = document.documentElement;
+        var htmlEl = document.documentElement;
         themeBtn.textContent = htmlEl.getAttribute('data-theme') === 'light' ? '🌙' : '☀️';
         themeBtn.addEventListener('click', function () {
             var next = htmlEl.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
@@ -418,17 +355,16 @@
       const dropdownEmail      = document.getElementById('dropdownEmail');
       const profileDropdown    = document.getElementById('profileDropdown');
       const navLogout          = document.getElementById('navLogout');
-
       onAuthStateChanged(auth, (user) => {
         if (!user) return;
         navUser.style.display = 'flex';
-        const name    = user.displayName || user.email.split('@')[0];
+        const name = user.displayName || user.email.split('@')[0];
         const initial = name.charAt(0).toUpperCase();
-        navUsername.textContent  = name;
-        dropdownName.textContent  = name;
+        navUsername.textContent = name;
+        dropdownName.textContent = name;
         dropdownEmail.textContent = user.email || '';
         if (user.photoURL) {
-          navAvatarImg.src = user.photoURL;  navAvatarImg.style.display = 'block';
+          navAvatarImg.src = user.photoURL; navAvatarImg.style.display = 'block';
           navAvatarInitial.style.display = 'none';
           dropdownAvatarImg.src = user.photoURL; dropdownAvatarImg.style.display = 'block';
           dropdownAvatarInit.style.display = 'none';
@@ -439,18 +375,15 @@
           dropdownAvatarImg.style.display = 'none';
         }
       });
-
       navProfile.addEventListener('click', (e) => {
         e.stopPropagation();
         navProfile.classList.toggle('open');
         profileDropdown.classList.toggle('open');
       });
-
       document.addEventListener('click', () => {
         navProfile.classList.remove('open');
         profileDropdown.classList.remove('open');
       });
-
       navLogout.addEventListener('click', () => {
         signOut(auth).then(() => { window.location.href = 'login.html'; });
       });

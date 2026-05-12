@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr Stone — αηιмєѕ தமிழ்</title>
+    <meta name="description"
+        content="Watch Dr Stone Season 1 , Season 2 , Season 3 & Season 4 all episodes in Tamil on αηιмєѕ தமிழ்.">
+    <link rel="stylesheet" href="style.css">
+    <script>/* apply saved theme before paint */
+        (function () { var t = localStorage.getItem('animeTheme') || 'dark'; document.documentElement.setAttribute('data-theme', t); })();
+    </script>
+    <style>
+        /* Page-specific keyframes — all other styles live in style.css */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+    <!-- Firebase env vars (local) -->
+    <script src="env-config.js"></script>
+    <!-- Auth guard: redirect to login if not signed in -->
+    <script type="module">
+      import { auth, onAuthStateChanged } from './firebase-config.js';
+      onAuthStateChanged(auth, (user) => {
+        if (!user) window.location.href = 'login.html';
+      });
+    </script>
+</head>
+
+<body>
+
+    <!-- ===== VIDEO MODAL ===== -->
+    <div class="modal-overlay" id="videoModal" role="dialog" aria-modal="true" aria-labelledby="modalEpTitle">
+        <div class="modal-box">
+            <div class="modal-topbar">
+                <div class="modal-ep-title" id="modalEpTitle">Episode</div>
+                <button class="modal-close" id="modalClose" title="Close (Esc)">✕</button>
+            </div>
+            <div class="modal-video-wrap">
+                <iframe id="modalIframe" title="Anime Video Player" src="" allowfullscreen allow="autoplay"></iframe>
+            </div>
+            <div class="modal-controls">
+                <button class="modal-nav-btn btn-prev" id="btnPrev">◀ Previous</button>
+                <div class="quality-selector" id="qualitySelector">
+                    <button class="quality-btn active" data-quality="720p">720p</button>
+                    <button class="quality-btn" data-quality="480p">480p</button>
+                    <button class="quality-btn" data-quality="360p">360p</button>
+                </div>
+                <div class="modal-ep-counter" id="epCounter">— / 85</div>
+                <button class="download-btn" id="downloadBtn" title="Download current episode">
+                    ⬇ Download
+                </button>
+                <button class="modal-nav-btn btn-next" id="btnNext">Next ▶</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">αηιмєѕ தமிழ்</a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">🏠 Home</a></li>
+        </ul>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme"
+            title="Toggle theme">☀️</button>
+        <!-- Nav user / profile dropdown -->
+        <div class="nav-user" id="navUser">
+          <div class="nav-profile" id="navProfile">
+            <img class="nav-avatar" id="navAvatarImg" src="" alt="">
+            <div class="nav-avatar-initial" id="navAvatarInitial"></div>
+            <span class="nav-username" id="navUsername"></span>
+            <span class="nav-profile-chevron">▼</span>
+            <div class="profile-dropdown" id="profileDropdown">
+              <div class="profile-dropdown-header">
+                <img class="dropdown-avatar" id="dropdownAvatarImg" src="" alt="">
+                <div class="dropdown-avatar-initial" id="dropdownAvatarInitial"></div>
+                <div class="dropdown-user-info">
+                  <div class="dropdown-name" id="dropdownName"></div>
+                  <div class="dropdown-email" id="dropdownEmail"></div>
+                </div>
+              </div>
+              <hr class="dropdown-divider">
+              <button class="dropdown-item" id="navLogout">🚪 Sign Out</button>
+            </div>
+          </div>
+        </div>
+    </nav>
+
+    <!-- ===== PAGE CONTENT ===== -->
+    <div class="page-wrapper">
+
+        <a href="index.html" class="back-link">← Back to Home</a>
+
+        <!-- SHOW HEADER -->
+        <div class="show-header">
+            <img src="MHA.jfif" alt="My Hero Academia" loading="lazy" decoding="async">
+            <div class="show-info">
+                <h1>MY HERO ACADEMIA</h1>
+                <p>
+                    8 Seasons &nbsp;•&nbsp; 174 Episodes &nbsp;•&nbsp; 2016–2026
+                </p>
+                <div class="genre-tags">
+                    <span class="genre-tag action">Action</span>
+                    <span class="genre-tag anime">Anime</span>
+                    <span class="genre-tag hero">Fantasy</span>
+                </div>
+                <p class="show-description">
+                    Choose a season below, then click any episode to watch it right here. 🎬
+                </p>
+            </div>
+        </div>
+
+        <!-- SEASON SECTION TITLE -->
+        <div class="section-title">Seasons</div>
+
+        <!-- SEASON ACCORDION -->
+        <div class="seasons-wrap" id="seasonsWrap">
+            <!-- Season 1 block -->
+            <div class="season-block" id="block-s1">
+                <div class="season-header" id="hdr-s1" role="button" aria-expanded="false" aria-controls="body-s1">
+                    <div class="season-header-left">
+                        <div class="season-num-badge">1</div>
+                        <div class="season-header-info">
+                            <div class="season-header-title">Season 1</div>
+                            <div class="season-header-meta">13 Episodes &nbsp;·&nbsp; 2019</div>
+                        </div>
+                    </div>
+                    <span class="season-chevron">▼</span>
+                </div>
+                <div class="season-body" id="body-s1">
+                    <div class="season-body-inner">
+                        <div class="season-content">
+                            <div class="season-cover">
+                                <img src="MHA S1.jpg" alt="My Hero Academia Season 1" loading="lazy" decoding="async">
+                            </div>
+                            <div class="season-episodes">
+                                <ul class="episode-list" id="listS1"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Season 2 block -->
+            <div class="season-block" id="block-s2">
+                <div class="season-header" id="hdr-s2" role="button" aria-expanded="false" aria-controls="body-s2">
+                    <div class="season-header-left">
+                        <div class="season-num-badge">2</div>
+                        <div class="season-header-info">
+                            <div class="season-header-title">Season 2</div>
+                            <div class="season-header-meta">24 Episodes &nbsp;·&nbsp; 2021</div>
+                        </div>
+                    </div>
+                    <span class="season-chevron">▼</span>
+                </div>
+                <div class="season-body" id="body-s2">
+                    <div class="season-body-inner">
+                        <div class="season-content">
+                            <div class="season-cover">
+                                <img src="MHA S2.jpg" alt="My Hero Academia Season 2" loading="lazy" decoding="async">
+                            </div>
+                            <div class="season-episodes">
+                                <ul class="episode-list" id="listS2"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Season 3 block -->
+            <div class="season-block" id="block-s3">
+                <div class="season-header" id="hdr-s3" role="button" aria-expanded="false" aria-controls="body-s3">
+                    <div class="season-header-left">
+                        <div class="season-num-badge">3</div>
+                        <div class="season-header-info">
+                            <div class="season-header-title">Season 3</div>
+                            <div class="season-header-meta">25 Episodes &nbsp;·&nbsp; 2023</div>
+                        </div>
+                    </div>
+                    <span class="season-chevron">▼</span>
+                </div>
+                <div class="season-body" id="body-s3">
+                    <div class="season-body-inner">
+                        <div class="season-content">
+                            <div class="season-cover">
+                                <img src="MHA S3.jpg" alt="My Hero Academia Season 3" loading="lazy" decoding="async">
+                            </div>
+                            <div class="season-episodes">
+                                <ul class="episode-list" id="listS3"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Season 4 block -->
+            <div class="season-block" id="block-s4">
+                <div class="season-header" id="hdr-s4" role="button" aria-expanded="false" aria-controls="body-s4">
+                    <div class="season-header-left">
+                        <div class="season-num-badge">4</div>
+                        <div class="season-header-info">
+                            <div class="season-header-title">Season 4</div>
+                            <div class="season-header-meta">25 Episodes &nbsp;·&nbsp; 2025</div>
+                        </div>
+                    </div>
+                    <span class="season-chevron">▼</span>
+                </div>
+                <div class="season-body" id="body-s4">
+                    <div class="season-body-inner">
+                        <div class="season-content">
+                            <div class="season-cover">
+                                <img src="MHA S4.jpg" alt="My Hero Academia Season 4" loading="lazy" decoding="async">
+                            </div>
+                            <div class="season-episodes">
+                                <ul class="episode-list" id="listS4"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Season 5 block -->
+            <div class="season-block" id="block-s5">
+                <div class="season-header" id="hdr-s5" role="button" aria-expanded="false" aria-controls="body-s5">
+                    <div class="season-header-left">
+                        <div class="season-num-badge">5</div>
+                        <div class="season-header-info">
+                            <div class="season-header-title">Season 5</div>
+                            <div class="season-header-meta">25 Episodes &nbsp;·&nbsp; 2025</div>
+                        </div>
+                    </div>
+                    <span class="season-chevron">▼</span>
+                </div>
+                <div class="season-body" id="body-s5">
+                    <div class="season-body-inner">
+                        <div class="season-content">
+                            <div class="season-cover">
+                                <img src="MHA S5.png" alt="My Hero Academia Season 5" loading="lazy" decoding="async">
+                            </div>
+                            <div class="season-episodes">
+                                <ul class="episode-list" id="listS5"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+             <!-- Season 6 block -->
+            <div class="season-block" id="block-s6">
+                <div class="season-header" id="hdr-s6" role="button" aria-expanded="false" aria-controls="body-s6">
+                    <div class="season-header-left">
+                        <div class="season-num-badge">6</div>
+                        <div class="season-header-info">
+                            <div class="season-header-title">Season 6</div>
+                            <div class="season-header-meta">26 Episodes &nbsp;·&nbsp; 2025</div>
+                        </div>
+                    </div>
+                    <span class="season-chevron">▼</span>
+                </div>
+                <div class="season-body" id="body-s6">
+                    <div class="season-body-inner">
+                        <div class="season-content">
+                            <div class="season-cover">
+                                <img src="MHA S6.jpg" alt="My Hero Academia Season 6" loading="lazy" decoding="async">
+                            </div>
+                            <div class="season-episodes">
+                                <ul class="episode-list" id="listS6"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Season 7 block -->
+            <div class="season-block" id="block-s7">
+                <div class="season-header" id="hdr-s7" role="button" aria-expanded="false" aria-controls="body-s7">
+                    <div class="season-header-left">
+                        <div class="season-num-badge">7</div>
+                        <div class="season-header-info">
+                            <div class="season-header-title">Season 7</div>
+                            <div class="season-header-meta">25 Episodes &nbsp;·&nbsp; 2025</div>
+                        </div>
+                    </div>
+                    <span class="season-chevron">▼</span>
+                </div>
+                <div class="season-body" id="body-s7">
+                    <div class="season-body-inner">
+                        <div class="season-content">
+                            <div class="season-cover">
+                                <img src="MHA S7.jpg" alt="My Hero Academia Season 7" loading="lazy" decoding="async">
+                            </div>
+                            <div class="season-episodes">
+                                <ul class="episode-list" id="listS7"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Season 8 block -->
+            <div class="season-block" id="block-s8">
+                <div class="season-header" id="hdr-s8" role="button" aria-expanded="false" aria-controls="body-s8">
+                    <div class="season-header-left">
+                        <div class="season-num-badge">8</div>
+                        <div class="season-header-info">
+                            <div class="season-header-title">Season 8</div>
+                            <div class="season-header-meta">11 Episodes &nbsp;·&nbsp; 2025</div>
+                        </div>
+                    </div>
+                    <span class="season-chevron">▼</span>
+                </div>
+                <div class="season-body" id="body-s8">
+                    <div class="season-body-inner">
+                        <div class="season-content">
+                            <div class="season-cover">
+                                <img src="MHA S8.jpg" alt="My Hero Academia Season 8" loading="lazy" decoding="async">
+                            </div>
+                            <div class="season-episodes">
+                                <ul class="episode-list" id="listS8"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+               
+
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Made with <span>♥</span> for Tamil anime fans &nbsp;|&nbsp; αηιмєѕ தமிழ்</p>
+        <p class="copyright">&copy; 2026 <span class="copy-brand">αηιмєѕ தமிழ்</span>. All rights reserved. Unauthorized
+            reproduction or distribution is prohibited.</p>
+    </footer>
+
+    <script>
+        // ─── Episode data ──────────────────────────────────────────────────────────
+        
+
+        const season1 = [
+            { label: 'My Hero Academia — Season 1 Episode 1', url: 'https://drive.google.com/file/d/1s_XxnMiemxA0gyvFveF-3DeJAa8tueMs/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 1 Episode 2', url: 'https://drive.google.com/file/d/1USyVHEi7i4a8Z3mQYRk94hZKUICTULJc/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 1 Episode 3', url: 'https://drive.google.com/file/d/11fANRwJZf6pk6xZi5toc8jFmFwpWcpeL/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 1 Episode 4', url: 'https://drive.google.com/file/d/1IIiK2I640DLNAUzXuAhtq21rT1YcFqZB/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 1 Episode 5', url: 'https://drive.google.com/file/d/1eBf5_cJpbtXF5GoLlVi6vKyyz2oKf2lJ/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 1 Episode 6', url: 'https://drive.google.com/file/d/139Pl7w7M4UIsWSeqr1m9Su0LGO2wL1ym/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 1 Episode 7', url: 'https://drive.google.com/file/d/1MkomkgneNdgF5MHhlmXGqLkdAwVaDdND/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 1 Episode 8', url: 'https://drive.google.com/file/d/15cJF19HI91hh6TfrhAVxlFCGmPVEmrTe/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 1 Episode 9', url: 'https://drive.google.com/file/d/1mrkeLhezO9kJULeaiqMnTojZg1k2T6CE/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 1 Episode 10', url: 'https://drive.google.com/file/d/1c2c-r8ZEqNecyWNySGJ8aoaW2SlKKTvb/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 1 Episode 11', url: 'https://drive.google.com/file/d/1rS3FFVazlq-lX5wfdW3zprATDmwqt0a0/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 1 Episode 12', url: 'https://drive.google.com/file/d/1dM7bhX4s9dRnQD8BFjb50Ws6O-fVYeTH/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 1 Episode 13', url: 'https://drive.google.com/file/d/1SLp9oljAyrNZw69EPrKzYWwUFpoiPMSe/view?usp=sharing' },
+            
+        ];
+
+
+        const season2 = [
+            { label: 'My Hero Academia — Season 2 Episode 1', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 2', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 3', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 4', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 5', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 6', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 7', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 8', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 9', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 10', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 11', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 12', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 13', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 14', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 15', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 16', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 17', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 18', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 19', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 20', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 21', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 22', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 23', url: '' },
+            { label: 'My Hero Academia — Season 2 Episode 24', url: '' },
+            
+        ];
+
+        const season3 = [
+            { label: 'My Hero Academia — Season 3 Episode 1', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 2', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 3', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 4', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 5', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 6', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 7', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 8', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 9', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 10', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 11', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 12', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 13', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 14', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 15', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 16', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 17', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 18', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 19', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 20', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 21', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 22', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 23', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 24', url: '' },
+            { label: 'My Hero Academia — Season 3 Episode 25', url: '' },
+            
+        ];
+
+        const season4 = [
+            { label: 'My Hero Academia — Season 4 Episode 1', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 2', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 3', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 4', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 5', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 6', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 7', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 8', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 9', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 10', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 11', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 12', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 13', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 14', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 15', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 16', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 17', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 18', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 19', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 20', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 21', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 22', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 23', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 24', url: '' },
+            { label: 'My Hero Academia — Season 4 Episode 25', url: '' },
+            
+        ];
+
+
+        const season5 = [
+            { label: 'My Hero Academia — Season 5 Episode 1', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 2', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 3', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 4', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 5', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 6', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 7', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 8', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 9', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 10', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 11', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 12', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 13', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 14', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 15', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 16', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 17', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 18', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 19', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 20', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 21', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 22', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 23', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 24', url: '' },
+            { label: 'My Hero Academia — Season 5 Episode 25', url: '' },
+            
+        ];
+
+
+        const season6 = [
+            { label: 'My Hero Academia — Season 6 Episode 1', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 2', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 3', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 4', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 5', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 6', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 7', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 8', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 9', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 10', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 11', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 12', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 13', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 14', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 15', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 16', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 17', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 18', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 19', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 20', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 21', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 22', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 23', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 24', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 25', url: '' },
+            { label: 'My Hero Academia — Season 6 Episode 26 OVA', url: '' },
+        ];
+
+
+
+        const season7 = [
+            { label: 'My Hero Academia — Season 7 Episode 1', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 2', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 3', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 4', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 5', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 6', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 7', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 8', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 9', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 10', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 11', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 12', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 13', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 14', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 15', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 16', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 17', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 18', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 19', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 20', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 21', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 22 Special Episode', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 23 Special Episode', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 24 Special Episode', url: '' },
+            { label: 'My Hero Academia — Season 7 Episode 25 Special Episode', url: '' },
+            
+        ];
+
+        const season8 = [
+            { label: 'My Hero Academia — Season 8 Episode 1', url: 'https://drive.google.com/file/d/1emZT1XrCCxUw42nEzmCgY_nYUQBDzp6Y/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 8 Episode 2', url: 'https://drive.google.com/file/d/1yNfuXai-0Tl1SVzqpRPGjggX5qxYjL3j/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 8 Episode 3', url: 'https://drive.google.com/file/d/1OsaRnHvBIITnvbYucdLcj-iQUroAdjnS/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 8 Episode 4', url: 'https://drive.google.com/file/d/1rbDH3UtcZFTldYB-bNlr8rMeLEE9gY6F/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 8 Episode 5', url: 'https://drive.google.com/file/d/1vp6LzC1Go0tEHiyhbvqAvUqEzBjIsobq/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 8 Episode 6', url: 'https://drive.google.com/file/d/1OjyQdSxhCQuSzMLNDVQPtFaZ2-KneT6T/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 8 Episode 7', url: 'https://drive.google.com/file/d/14NlzDQAN95KE-LM2aH7WGYPqr0Oi0OB1/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 8 Episode 8', url: 'https://drive.google.com/file/d/11nBer_xkLuDETryjwlTrFTeRpgBzQ9m1/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 8 Episode 9', url: 'https://drive.google.com/file/d/1hI971CV8SWIjp6c6IMUmyAMv9_uLmK7-/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 8 Episode 10', url: 'https://drive.google.com/file/d/1yaX4PaGt2h-q1PeGIQXueHFiBImZJzbM/view?usp=sharing' },
+            { label: 'My Hero Academia — Season 8 Episode 11', url: 'https://drive.google.com/file/d/1q5tT2gzsxr4ivgkIJIZnPhRSJBDWN9A9/view?usp=sharing' },
+
+
+        ];
+
+
+
+     
+
+
+
+        const allEpisodes = [...season1, ...season2, ...season3, ...season4, ...season5, ...season6, ...season7, ...season8];
+        const total = allEpisodes.length;
+        let currentEp = 0;
+
+        // ─── Drive share → embed URL ───────────────────────────────────────────────
+        function embedUrl(shareUrl) {
+            const m = shareUrl.match(/\/file\/d\/([^/]+)\//);
+            return m ? `https://drive.google.com/file/d/${m[1]}/preview` : shareUrl;
+        }
+
+        // ─── Build episode list ────────────────────────────────────────────────────
+        function buildList(listId, episodes, globalOffset) {
+            const ul = document.getElementById(listId);
+            episodes.forEach((ep, i) => {
+                const globalIndex = globalOffset + i;
+                const epNum = String(i + 1).padStart(2, '0');
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <a href="#" class="ep-link" data-index="${globalIndex}" id="ep-${globalIndex}">
+                        <span class="ep-number">${epNum}</span>
+                        ${ep.label}
+                        <span class="ep-icon">▶</span>
+                    </a>`;
+                ul.appendChild(li);
+            });
+        }
+
+        buildList('listS1', season1, 0);
+        buildList('listS2', season2, season1.length);
+        buildList('listS3', season3, season1.length + season2.length);
+        buildList('listS4', season4, season1.length + season2.length + season3.length);
+        buildList('listS5', season5, season1.length + season2.length + season3.length + season4.length);
+        buildList('listS6', season6, season1.length + season2.length + season3.length + season4.length + season5.length);
+        buildList('listS7', season7, season1.length + season2.length + season3.length + season4.length + season5.length + season6.length);
+        buildList('listS8', season8, season1.length + season2.length + season3.length + season4.length + season5.length + season6.length + season7.length);
+
+        // ─── Season accordion toggle ───────────────────────────────────────────────
+        function toggleSeason(blockId, headerId) {
+            const block = document.getElementById(blockId);
+            const hdr = document.getElementById(headerId);
+            const isOpen = block.classList.contains('open');
+            block.classList.toggle('open', !isOpen);
+            hdr.setAttribute('aria-expanded', String(!isOpen));
+        }
+
+        document.getElementById('hdr-s1').addEventListener('click', () => toggleSeason('block-s1', 'hdr-s1'));
+        document.getElementById('hdr-s2').addEventListener('click', () => toggleSeason('block-s2', 'hdr-s2'));
+        document.getElementById('hdr-s3').addEventListener('click', () => toggleSeason('block-s3', 'hdr-s3'));
+        document.getElementById('hdr-s4').addEventListener('click', () => toggleSeason('block-s4', 'hdr-s4'));
+        document.getElementById('hdr-s5').addEventListener('click', () => toggleSeason('block-s5', 'hdr-s5'));
+        document.getElementById('hdr-s6').addEventListener('click', () => toggleSeason('block-s6', 'hdr-s6'));
+        document.getElementById('hdr-s7').addEventListener('click', () => toggleSeason('block-s7', 'hdr-s7'));
+        document.getElementById('hdr-s8').addEventListener('click', () => toggleSeason('block-s8', 'hdr-s8'));
+
+        // ─── Modal elements ────────────────────────────────────────────────────────
+        const modal = document.getElementById('videoModal');
+        const iframe = document.getElementById('modalIframe');
+        const modalTitle = document.getElementById('modalEpTitle');
+        const epCounter = document.getElementById('epCounter');
+        const btnPrev = document.getElementById('btnPrev');
+        const btnNext = document.getElementById('btnNext');
+        const btnClose = document.getElementById('modalClose');
+        const qualityBtns = document.querySelectorAll('.quality-btn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        let currentQuality = '720p';
+
+        function openEpisode(index) {
+            currentEp = index;
+            currentQuality = '720p';
+            const ep = allEpisodes[index];
+            modalTitle.textContent = ep.label;
+            epCounter.textContent = `${index + 1} / ${total}`;
+            iframe.src = embedUrl(ep.url);
+            btnPrev.disabled = index === 0;
+            btnNext.disabled = index === total - 1;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            document.querySelectorAll('.ep-link').forEach(a => a.classList.remove('ep-active'));
+            const activeLink = document.getElementById(`ep-${index}`);
+            if (activeLink) activeLink.classList.add('ep-active');
+
+            // Reset quality buttons
+            qualityBtns.forEach(btn => btn.classList.remove('active'));
+            document.querySelector('[data-quality="720p"]').classList.add('active');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            iframe.src = '';
+            document.body.style.overflow = '';
+            document.querySelectorAll('.ep-link').forEach(a => a.classList.remove('ep-active'));
+        }
+
+        function downloadEpisode() {
+            const ep = allEpisodes[currentEp];
+            let urlToDL = ep.url;
+
+            // Extract Google Drive file ID from sharing URL
+            const match = ep.url.match(/\/file\/d\/([^\/]+)\//);
+            if (match && match[1]) {
+                urlToDL = `https://drive.google.com/uc?export=download&id=${match[1]}`;
+            }
+
+            downloadBtn.classList.add('loading');
+            downloadBtn.textContent = '⏳ Preparing...';
+            downloadBtn.disabled = true;
+
+            // Open download link
+            const a = document.createElement('a');
+            a.href = urlToDL;
+            a.target = '_blank';
+            a.click();
+
+            // Reset button after 2 seconds
+            setTimeout(() => {
+                downloadBtn.classList.remove('loading');
+                downloadBtn.textContent = '⬇ Download';
+                downloadBtn.disabled = false;
+            }, 2000);
+        }
+
+
+        // ─── Event listeners ──────────────────────────────────────────────────────
+        document.addEventListener('click', e => {
+            const link = e.target.closest('.ep-link');
+            if (!link) return;
+            e.preventDefault();
+            openEpisode(parseInt(link.dataset.index));
+        });
+
+        qualityBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentQuality = btn.dataset.quality;
+                qualityBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        downloadBtn.addEventListener('click', downloadEpisode);
+        btnPrev.addEventListener('click', () => { if (currentEp > 0) openEpisode(currentEp - 1); });
+        btnNext.addEventListener('click', () => { if (currentEp < total - 1) openEpisode(currentEp + 1); });
+        btnClose.addEventListener('click', closeModal);
+        modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+        });
+
+        // ─── Hamburger menu ──────────────────────────────────────────────────────
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', function () {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            hamburger.setAttribute('aria-expanded', navLinks.classList.contains('active'));
+        });
+
+        // Close menu when a link is clicked
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function () {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', false);
+            });
+        });
+
+        // ─── Theme toggle ─────────────────────────────────────────────────────────
+        var themeBtn = document.getElementById('themeToggle');
+        var htmlEl = document.documentElement;
+        themeBtn.textContent = htmlEl.getAttribute('data-theme') === 'light' ? '🌙' : '☀️';
+        themeBtn.addEventListener('click', function () {
+            var next = htmlEl.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            htmlEl.setAttribute('data-theme', next);
+            localStorage.setItem('animeTheme', next);
+            themeBtn.textContent = next === 'light' ? '🌙' : '☀️';
+        });
+    </script>
+
+    <!-- Auth: profile dropdown -->
+    <script type="module">
+      import { auth, onAuthStateChanged, signOut } from './firebase-config.js';
+      const navUser = document.getElementById('navUser');
+      const navProfile = document.getElementById('navProfile');
+      const navUsername = document.getElementById('navUsername');
+      const navAvatarImg = document.getElementById('navAvatarImg');
+      const navAvatarInitial = document.getElementById('navAvatarInitial');
+      const dropdownAvatarImg = document.getElementById('dropdownAvatarImg');
+      const dropdownAvatarInit = document.getElementById('dropdownAvatarInitial');
+      const dropdownName = document.getElementById('dropdownName');
+      const dropdownEmail = document.getElementById('dropdownEmail');
+      const profileDropdown = document.getElementById('profileDropdown');
+      const navLogout = document.getElementById('navLogout');
+      onAuthStateChanged(auth, (user) => {
+        if (!user) return;
+        navUser.style.display = 'flex';
+        const name = user.displayName || user.email.split('@')[0];
+        const initial = name.charAt(0).toUpperCase();
+        navUsername.textContent = name;
+        dropdownName.textContent = name;
+        dropdownEmail.textContent = user.email || '';
+        if (user.photoURL) {
+          navAvatarImg.src = user.photoURL; navAvatarImg.style.display = 'block';
+          navAvatarInitial.style.display = 'none';
+          dropdownAvatarImg.src = user.photoURL; dropdownAvatarImg.style.display = 'block';
+          dropdownAvatarInit.style.display = 'none';
+        } else {
+          navAvatarInitial.textContent = initial; navAvatarInitial.style.display = 'flex';
+          navAvatarImg.style.display = 'none';
+          dropdownAvatarInit.textContent = initial; dropdownAvatarInit.style.display = 'flex';
+          dropdownAvatarImg.style.display = 'none';
+        }
+      });
+      navProfile.addEventListener('click', (e) => { e.stopPropagation(); navProfile.classList.toggle('open'); profileDropdown.classList.toggle('open'); });
+      document.addEventListener('click', () => { navProfile.classList.remove('open'); profileDropdown.classList.remove('open'); });
+      navLogout.addEventListener('click', () => { signOut(auth).then(() => { window.location.href = 'login.html'; }); });
+    </script>
+
+</body>
+
+</html>
