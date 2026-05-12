@@ -4,26 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solo Leveling — αηιмєѕ தமிழ்</title>
-    <meta name="description" content="Watch Solo Leveling Season 1 & Season 2 all episodes in Tamil on αηιмєѕ தமிழ்.">
+    <title>Karna: The Guardian — αηιмєѕ தமிழ்</title>
+    <meta name="description" content="Watch Karna: The Guardian all episodes in Tamil on αηιмєѕ தமிழ்.">
     <link rel="stylesheet" href="style.css">
     <script>/* apply saved theme before paint */
         (function () { var t = localStorage.getItem('animeTheme') || 'dark'; document.documentElement.setAttribute('data-theme', t); })();
     </script>
-        <style>
+    <style>
         /* Page-specific keyframes — all other styles live in style.css */
-        @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
     </style>
-    <!-- Firebase env vars (local) -->
-    <script src="env-config.js"></script>
-    <!-- Auth guard: redirect to login if not signed in -->
-    <script type="module">
-      import { auth, onAuthStateChanged } from './firebase-config.js';
-      onAuthStateChanged(auth, (user) => {
-        if (!user) window.location.href = 'login.html';
-      });
-    </script>
+
 </head>
 
 <body>
@@ -45,7 +56,7 @@
                     <button class="quality-btn" data-quality="480p">480p</button>
                     <button class="quality-btn" data-quality="360p">360p</button>
                 </div>
-                <div class="modal-ep-counter" id="epCounter">— / 25</div>
+                <div class="modal-ep-counter" id="epCounter">— / 12</div>
                 <button class="download-btn" id="downloadBtn" title="Download current episode">
                     ⬇ Download
                 </button>
@@ -67,27 +78,7 @@
         </ul>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme"
             title="Toggle theme">☀️</button>
-        <!-- Nav user / profile dropdown -->
-        <div class="nav-user" id="navUser">
-          <div class="nav-profile" id="navProfile">
-            <img class="nav-avatar" id="navAvatarImg" src="" alt="">
-            <div class="nav-avatar-initial" id="navAvatarInitial"></div>
-            <span class="nav-username" id="navUsername"></span>
-            <span class="nav-profile-chevron">▼</span>
-            <div class="profile-dropdown" id="profileDropdown">
-              <div class="profile-dropdown-header">
-                <img class="dropdown-avatar" id="dropdownAvatarImg" src="" alt="">
-                <div class="dropdown-avatar-initial" id="dropdownAvatarInitial"></div>
-                <div class="dropdown-user-info">
-                  <div class="dropdown-name" id="dropdownName"></div>
-                  <div class="dropdown-email" id="dropdownEmail"></div>
-                </div>
-              </div>
-              <hr class="dropdown-divider">
-              <button class="dropdown-item" id="navLogout">🚪 Sign Out</button>
-            </div>
-          </div>
-        </div>
+
     </nav>
 
     <!-- ===== PAGE CONTENT ===== -->
@@ -172,7 +163,7 @@
             { label: 'Karna: The Guardian — Season 1 Episode 12', url: '' },
         ];
 
-        
+
 
         const allEpisodes = [...season1];
         const total = allEpisodes.length;
@@ -202,7 +193,7 @@
         }
 
         buildList('listS1', season1, 0);
-        
+
 
         // ─── Season accordion toggle ───────────────────────────────────────────────
         function toggleSeason(blockId, headerId) {
@@ -214,7 +205,7 @@
         }
 
         document.getElementById('hdr-s1').addEventListener('click', () => toggleSeason('block-s1', 'hdr-s1'));
-        
+
 
         // ─── Modal elements ────────────────────────────────────────────────────────
         const modal = document.getElementById('videoModal');
@@ -243,7 +234,7 @@
             document.querySelectorAll('.ep-link').forEach(a => a.classList.remove('ep-active'));
             const activeLink = document.getElementById(`ep-${index}`);
             if (activeLink) activeLink.classList.add('ep-active');
-            
+
             // Reset quality buttons
             qualityBtns.forEach(btn => btn.classList.remove('active'));
             document.querySelector('[data-quality="720p"]').classList.add('active');
@@ -259,23 +250,23 @@
         function downloadEpisode() {
             const ep = allEpisodes[currentEp];
             let urlToDL = ep.url;
-            
+
             // Extract Google Drive file ID from sharing URL
             const match = ep.url.match(/\/file\/d\/([^\/]+)\//);
             if (match && match[1]) {
                 urlToDL = `https://drive.google.com/uc?export=download&id=${match[1]}`;
             }
-            
+
             downloadBtn.classList.add('loading');
             downloadBtn.textContent = '⏳ Preparing...';
             downloadBtn.disabled = true;
-            
+
             // Open download link
             const a = document.createElement('a');
             a.href = urlToDL;
             a.target = '_blank';
             a.click();
-            
+
             // Reset button after 2 seconds
             setTimeout(() => {
                 downloadBtn.classList.remove('loading');
@@ -313,7 +304,7 @@
         // ─── Hamburger menu ──────────────────────────────────────────────────────
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
-        
+
         hamburger.addEventListener('click', function () {
             navLinks.classList.toggle('active');
             hamburger.classList.toggle('active');
@@ -341,53 +332,7 @@
         });
     </script>
 
-    <!-- Auth: profile dropdown -->
-    <script type="module">
-      import { auth, onAuthStateChanged, signOut } from './firebase-config.js';
-      const navUser            = document.getElementById('navUser');
-      const navProfile         = document.getElementById('navProfile');
-      const navUsername        = document.getElementById('navUsername');
-      const navAvatarImg       = document.getElementById('navAvatarImg');
-      const navAvatarInitial   = document.getElementById('navAvatarInitial');
-      const dropdownAvatarImg  = document.getElementById('dropdownAvatarImg');
-      const dropdownAvatarInit = document.getElementById('dropdownAvatarInitial');
-      const dropdownName       = document.getElementById('dropdownName');
-      const dropdownEmail      = document.getElementById('dropdownEmail');
-      const profileDropdown    = document.getElementById('profileDropdown');
-      const navLogout          = document.getElementById('navLogout');
-      onAuthStateChanged(auth, (user) => {
-        if (!user) return;
-        navUser.style.display = 'flex';
-        const name = user.displayName || user.email.split('@')[0];
-        const initial = name.charAt(0).toUpperCase();
-        navUsername.textContent = name;
-        dropdownName.textContent = name;
-        dropdownEmail.textContent = user.email || '';
-        if (user.photoURL) {
-          navAvatarImg.src = user.photoURL; navAvatarImg.style.display = 'block';
-          navAvatarInitial.style.display = 'none';
-          dropdownAvatarImg.src = user.photoURL; dropdownAvatarImg.style.display = 'block';
-          dropdownAvatarInit.style.display = 'none';
-        } else {
-          navAvatarInitial.textContent = initial; navAvatarInitial.style.display = 'flex';
-          navAvatarImg.style.display = 'none';
-          dropdownAvatarInit.textContent = initial; dropdownAvatarInit.style.display = 'flex';
-          dropdownAvatarImg.style.display = 'none';
-        }
-      });
-      navProfile.addEventListener('click', (e) => {
-        e.stopPropagation();
-        navProfile.classList.toggle('open');
-        profileDropdown.classList.toggle('open');
-      });
-      document.addEventListener('click', () => {
-        navProfile.classList.remove('open');
-        profileDropdown.classList.remove('open');
-      });
-      navLogout.addEventListener('click', () => {
-        signOut(auth).then(() => { window.location.href = 'login.html'; });
-      });
-    </script>
+
 
 </body>
 
