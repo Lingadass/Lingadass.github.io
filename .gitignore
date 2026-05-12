@@ -1,0 +1,17 @@
+# Git-ignore list for αηιмєѕ தமிழ் anime website
+
+# ── Secrets & local env (NEVER push these) ─────────────────────────────────
+env-config.js
+.env
+.env.local
+.env.production
+
+# ── Build output ────────────────────────────────────────────────────────────
+dist/
+
+# ── Dependencies ────────────────────────────────────────────────────────────
+node_modules/
+
+# ── OS artefacts ────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1a1a2e">
+  <title>Sign In — αηιмєѕ தமிழ்</title>
+  <meta name="description" content="Sign in or create an account to watch anime in Tamil on αηιмєѕ தமிழ்.">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- env-config.js must load FIRST (plain script, not module) -->
+  <script src="env-config.js"></script>
+
+  <style>
+    /* ── CSS variables matching style.css exactly ── */
+    :root {
+      --bg-primary:   #1a1a2e;
+      --bg-secondary: #16213e;
+      --sky-blue:     #87ceeb;
+      --sky-blue-dark:#4fb3d9;
+      --light-red:    #ff6b6b;
+      --purple:       #b06cf5;
+      --purple-dark:  #8a4fd4;
+      --text-primary: #e8e8f0;
+      --text-purple:  #c492f7;
+      --border-sky:   rgba(135,206,235,0.35);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Outfit', Arial, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Animated background blobs */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at top left,  rgba(135,206,235,0.10) 0%, transparent 50%),
+        radial-gradient(ellipse at top right, rgba(176,108,245,0.10) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom,    rgba(255,107,107,0.07) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Logo ── */
+    .login-logo {
+      font-size: 2.1rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--sky-blue), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 28px;
+      text-align: center;
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 1;
+      animation: slideDown 0.6s ease-out;
+    }
+
+    /* ── Card ── */
+    .login-card {
+      background: var(--bg-secondary);
+      border: 1.5px solid var(--border-sky);
+      border-radius: 18px;
+      padding: 36px 32px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 48px rgba(135,206,235,0.10);
+      position: relative;
+      z-index: 1;
+      animation: scaleIn 0.5s ease-out;
+    }
+
+    /* ── Tab switcher ── */
+    .auth-tabs {
+      display: flex;
+      gap: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.5px solid var(--border-sky);
+      margin-bottom: 28px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 11px;
+      background: transparent;
+      border: none;
+      color: var(--text-primary);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .auth-tab.active {
+      background: linear-gradient(135deg, var(--sky-blue-dark), var(--purple-dark));
+      color: #fff;
+    }
+
+    /* ── Inputs ── */
+    .auth-input {
+      width: 100%;
+      padding: 13px 16px;
+      background: var(--bg-primary);
+      border: 1.5px solid var(--border-sky);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .auth-input:focus { border-color: var(--sky-blue); }
+
+    /* ── Submit button ── */
+    .auth-submit-btn {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, var(--sky-blue-dark), var(--purple-dark));
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 14px;
+      transition: opacity 0.2s, transform 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .auth-submit-btn:hover  { opacity: 0.9; transform: translateY(-1px); }
+    .auth-submit-btn:active { transform: translateY(0); }
+    .auth-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* Spinner */
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2.5px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+
+    .auth-submit-btn.loading .spinner { display: inline-block; }
+
+    /* ── Divider ── */
+    .auth-divider {
+      text-align: center;
+      color: #888;
+      font-size: 0.85rem;
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 38%;
+      height: 1px;
+      background: rgba(135,206,235,0.2);
+    }
+    .auth-divider::before { left: 0; }
+    .auth-divider::after  { right: 0; }
+
+    /* ── Google button ── */
+    .google-btn {
+      width: 100%;
+      padding: 12px;
+      background: #fff;
+      border: 1.5px solid #ddd;
+      border-radius: 10px;
+      color: #333;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: box-shadow 0.2s, transform 0.15s;
+    }
+
+    .google-btn:hover  { box-shadow: 0 4px 16px rgba(0,0,0,0.18); transform: translateY(-1px); }
+    .google-btn:active { transform: translateY(0); }
+
+    /* ── Error box ── */
+    .auth-error {
+      background: rgba(255,107,107,0.12);
+      border: 1px solid var(--light-red);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: var(--light-red);
+      font-size: 0.875rem;
+      margin-bottom: 14px;
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .auth-error.visible { display: block; }
+
+    /* ── Keyframes ── */
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes scaleIn   { from { opacity: 0; transform: scale(0.95);       } to { opacity: 1; transform: scale(1);    } }
+    @keyframes spin      { to   { transform: rotate(360deg); } }
+    @keyframes fadeIn    { from { opacity: 0; } to { opacity: 1; } }
+
+    /* ── Mobile ── */
+    @media (max-width: 440px) {
+      .login-card { padding: 28px 20px; }
+      .login-logo { font-size: 1.7rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-logo" id="loginLogo">αηιмєѕ தமிழ்</div>
+
+  <div class="login-card" role="main">
+
+    <!-- Tab switcher -->
+    <div class="auth-tabs" role="tablist">
+      <button class="auth-tab active" id="tabLogin"  role="tab" aria-selected="true"  aria-controls="panelLogin">Login</button>
+      <button class="auth-tab"        id="tabSignup" role="tab" aria-selected="false" aria-controls="panelSignup">Sign Up</button>
+    </div>
+
+    <!-- Error message -->
+    <div class="auth-error" id="authError" role="alert" aria-live="polite"></div>
+
+    <!-- Email / Password inputs -->
+    <input  class="auth-input" id="authEmail"    type="email"    placeholder="Email address" autocomplete="email"         required>
+    <input  class="auth-input" id="authPassword" type="password" placeholder="Password"      autocomplete="current-password" required>
+
+    <!-- Submit button -->
+    <button class="auth-submit-btn" id="authSubmit">
+      <span class="spinner" id="spinner"></span>
+      <span id="submitLabel">Sign In</span>
+    </button>
+
+    <!-- Divider -->
+    <div class="auth-divider">or</div>
+
+    <!-- Google sign-in -->
+    <button class="google-btn" id="googleSignIn">
+      <!-- Google "G" SVG icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48" aria-hidden="true">
+        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        <path fill="none" d="M0 0h48v48H0z"/>
+      </svg>
+      Continue with Google
+    </button>
+
+  </div>
+
+  <!-- Firebase SDK + auth logic (ES module) -->
+  <script type="module">
+    import { initializeApp }
+      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword,
+      signInWithPopup,
+      GoogleAuthProvider
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    // ── Initialise Firebase from window.__env__ ────────────────────────────
+    const firebaseConfig = {
+      apiKey:            window.__env__?.FIREBASE_API_KEY            || "",
+      authDomain:        window.__env__?.FIREBASE_AUTH_DOMAIN        || "",
+      projectId:         window.__env__?.FIREBASE_PROJECT_ID         || "",
+      storageBucket:     window.__env__?.FIREBASE_STORAGE_BUCKET     || "",
+      messagingSenderId: window.__env__?.FIREBASE_MESSAGING_SENDER_ID|| "",
+      appId:             window.__env__?.FIREBASE_APP_ID             || "",
+    };
+
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // ── Redirect if already signed in ─────────────────────────────────────
+    onAuthStateChanged(auth, (user) => {
+      if (user) window.location.replace('index.html');
+    });
+
+    // ── DOM refs ──────────────────────────────────────────────────────────
+    const tabLogin    = document.getElementById('tabLogin');
+    const tabSignup   = document.getElementById('tabSignup');
+    const emailInput  = document.getElementById('authEmail');
+    const passInput   = document.getElementById('authPassword');
+    const submitBtn   = document.getElementById('authSubmit');
+    const submitLabel = document.getElementById('submitLabel');
+    const spinner     = document.getElementById('spinner');
+    const errorBox    = document.getElementById('authError');
+    const googleBtn   = document.getElementById('googleSignIn');
+
+    let isLogin = true; // tracks current tab
+
+    // ── Tab switching ─────────────────────────────────────────────────────
+    function switchTab(toLogin) {
+      isLogin = toLogin;
+      tabLogin.classList.toggle('active', toLogin);
+      tabSignup.classList.toggle('active', !toLogin);
+      tabLogin.setAttribute('aria-selected', toLogin);
+      tabSignup.setAttribute('aria-selected', !toLogin);
+      submitLabel.textContent = toLogin ? 'Sign In' : 'Create Account';
+      passInput.autocomplete  = toLogin ? 'current-password' : 'new-password';
+      hideError();
+    }
+
+    tabLogin.addEventListener('click',  () => switchTab(true));
+    tabSignup.addEventListener('click', () => switchTab(false));
+
+    // ── Error helpers ─────────────────────────────────────────────────────
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.classList.add('visible');
+    }
+
+    function hideError() {
+      errorBox.classList.remove('visible');
+      errorBox.textContent = '';
+    }
+
+    // ── Loading state ─────────────────────────────────────────────────────
+    function setLoading(on) {
+      submitBtn.disabled = on;
+      googleBtn.disabled = on;
+      submitBtn.classList.toggle('loading', on);
+      spinner.style.display = on ? 'inline-block' : 'none';
+    }
+
+    // ── Friendly Firebase error messages ─────────────────────────────────
+    function friendlyError(code) {
+      const map = {
+        'auth/invalid-email':          'Please enter a valid email address.',
+        'auth/user-not-found':         'No account found with this email.',
+        'auth/wrong-password':         'Incorrect password. Please try again.',
+        'auth/email-already-in-use':   'An account with this email already exists.',
+        'auth/weak-password':          'Password must be at least 6 characters.',
+        'auth/popup-closed-by-user':   'Google sign-in was cancelled.',
+        'auth/network-request-failed': 'Network error. Check your connection.',
+        'auth/too-many-requests':      'Too many attempts. Please wait a moment.',
+        'auth/invalid-credential':     'Invalid email or password.',
+      };
+      return map[code] || 'Something went wrong. Please try again.';
+    }
+
+    // ── Email / Password submit ───────────────────────────────────────────
+    submitBtn.addEventListener('click', async () => {
+      hideError();
+      const email    = emailInput.value.trim();
+      const password = passInput.value;
+
+      if (!email || !password) { showError('Please fill in both fields.'); return; }
+
+      setLoading(true);
+      try {
+        if (isLogin) {
+          await signInWithEmailAndPassword(auth, email, password);
+        } else {
+          await createUserWithEmailAndPassword(auth, email, password);
+        }
+        // onAuthStateChanged will redirect automatically
+      } catch (err) {
+        showError(friendlyError(err.code));
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    // Submit on Enter key
+    [emailInput, passInput].forEach(el => {
+      el.addEventListener('keydown', e => { if (e.key === 'Enter') submitBtn.click(); });
+    });
+
+    // ── Google Sign-In ────────────────────────────────────────────────────
+    googleBtn.addEventListener('click', async () => {
+      hideError();
+      setLoading(true);
+      try {
+        const provider = new GoogleAuthProvider();
+        await signInWithPopup(auth, provider);
+        // onAuthStateChanged will redirect automatically
+      } catch (err) {
+        showError(friendlyError(err.code));
+      } finally {
+        setLoading(false);
+      }
+    });
+  </script>
+
+</body>
+</html>

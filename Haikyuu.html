@@ -16,6 +16,15 @@
         @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     </style>
+    <!-- Firebase env vars (local) -->
+    <script src="env-config.js"></script>
+    <!-- Auth guard: redirect to login if not signed in -->
+    <script type="module">
+      import { auth, onAuthStateChanged } from './firebase-config.js';
+      onAuthStateChanged(auth, (user) => {
+        if (!user) window.location.href = 'login.html';
+      });
+    </script>
 </head>
 
 <body>
@@ -59,6 +68,27 @@
         </ul>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme"
             title="Toggle theme">☀️</button>
+        <!-- Nav user / profile dropdown -->
+        <div class="nav-user" id="navUser" style="display:none;">
+          <div class="nav-profile" id="navProfile">
+            <img class="nav-avatar" id="navAvatarImg" src="" alt="" style="display:none;">
+            <div class="nav-avatar-initial" id="navAvatarInitial" style="display:none;"></div>
+            <span class="nav-username" id="navUsername"></span>
+            <span class="nav-profile-chevron">▼</span>
+            <div class="profile-dropdown" id="profileDropdown">
+              <div class="profile-dropdown-header">
+                <img class="dropdown-avatar" id="dropdownAvatarImg" src="" alt="" style="display:none;">
+                <div class="dropdown-avatar-initial" id="dropdownAvatarInitial" style="display:none;"></div>
+                <div class="dropdown-user-info">
+                  <div class="dropdown-name" id="dropdownName"></div>
+                  <div class="dropdown-email" id="dropdownEmail"></div>
+                </div>
+              </div>
+              <hr class="dropdown-divider">
+              <button class="dropdown-item" id="navLogout">🚪 Sign Out</button>
+            </div>
+          </div>
+        </div>
     </nav>
 
     <!-- ===== PAGE CONTENT ===== -->
@@ -478,6 +508,45 @@
             localStorage.setItem('animeTheme', next);
             themeBtn.textContent = next === 'light' ? '🌙' : '☀️';
         });
+    </script>
+
+    <!-- Auth: profile dropdown -->
+    <script type="module">
+      import { auth, onAuthStateChanged, signOut } from './firebase-config.js';
+      const navUser = document.getElementById('navUser');
+      const navProfile = document.getElementById('navProfile');
+      const navUsername = document.getElementById('navUsername');
+      const navAvatarImg = document.getElementById('navAvatarImg');
+      const navAvatarInitial = document.getElementById('navAvatarInitial');
+      const dropdownAvatarImg = document.getElementById('dropdownAvatarImg');
+      const dropdownAvatarInit = document.getElementById('dropdownAvatarInitial');
+      const dropdownName = document.getElementById('dropdownName');
+      const dropdownEmail = document.getElementById('dropdownEmail');
+      const profileDropdown = document.getElementById('profileDropdown');
+      const navLogout = document.getElementById('navLogout');
+      onAuthStateChanged(auth, (user) => {
+        if (!user) return;
+        navUser.style.display = 'flex';
+        const name = user.displayName || user.email.split('@')[0];
+        const initial = name.charAt(0).toUpperCase();
+        navUsername.textContent = name;
+        dropdownName.textContent = name;
+        dropdownEmail.textContent = user.email || '';
+        if (user.photoURL) {
+          navAvatarImg.src = user.photoURL; navAvatarImg.style.display = 'block';
+          navAvatarInitial.style.display = 'none';
+          dropdownAvatarImg.src = user.photoURL; dropdownAvatarImg.style.display = 'block';
+          dropdownAvatarInit.style.display = 'none';
+        } else {
+          navAvatarInitial.textContent = initial; navAvatarInitial.style.display = 'flex';
+          navAvatarImg.style.display = 'none';
+          dropdownAvatarInit.textContent = initial; dropdownAvatarInit.style.display = 'flex';
+          dropdownAvatarImg.style.display = 'none';
+        }
+      });
+      navProfile.addEventListener('click', (e) => { e.stopPropagation(); navProfile.classList.toggle('open'); profileDropdown.classList.toggle('open'); });
+      document.addEventListener('click', () => { navProfile.classList.remove('open'); profileDropdown.classList.remove('open'); });
+      navLogout.addEventListener('click', () => { signOut(auth).then(() => { window.location.href = 'login.html'; }); });
     </script>
 
 </body>
