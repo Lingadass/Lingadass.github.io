@@ -40,8 +40,8 @@
                 <div class="modal-ep-title" id="modalEpTitle">Episode</div>
                 <button class="modal-close" id="modalClose" title="Close (Esc)">✕</button>
             </div>
-            <div class="modal-video-wrap">
-                <iframe id="modalIframe" title="Anime Video Player" src="" allowfullscreen allow="autoplay"></iframe>
+            <div class="modal-video-wrap" id="videoWrap">
+                <iframe id="modalIframe" title="Anime Video Player" src="" allowfullscreen allow="autoplay; encrypted-media" referrerpolicy="no-referrer-when-downgrade" loading="lazy"></iframe>
             </div>
             <div class="modal-controls">
                 <button class="modal-nav-btn btn-prev" id="btnPrev">◀ Previous</button>
@@ -143,6 +143,7 @@
 
     <script>
         // ─── Episode data with multiple quality options ──────────────────────────
+        // Note: Episodes 4–9 reuse placeholder Drive IDs until unique uploads are added.
         const episodes = [
             { 
                 title: 'Jujutsu Kaisen — Season 3 Episode 1',
@@ -215,15 +216,6 @@
                     '480p': '1kcTKomRymmZXkpHocSrpo24xtUE03zcZ',
                     '360p': '1qmKaffReJZRVHK5d0J41sX0OJqirkPjY'
                 }
-            },
-
-            { 
-                title: 'Jujutsu Kaisen — Season 3 Episode 10',
-                qualities: {
-                    '720p': '1ItHb0RLCNcj0u20IOOIFqItU2-C0SfKZ',
-                    '480p': '1kcTKomRymmZXkpHocSrpo24xtUE03zcZ',
-                    '360p': '1qmKaffReJZRVHK5d0J41sX0OJqirkPjY'
-                }
             }
         ];
 
@@ -269,10 +261,22 @@
             return `https://drive.google.com/file/d/${fileId}/preview`;
         }
 
+        const videoWrap = document.getElementById('videoWrap');
+
+        // Iframe load detection — show spinner while loading, fade in when ready
+        iframe.addEventListener('load', function () {
+            if (iframe.src) videoWrap.classList.add('loaded');
+        });
+
+        function showLoading() {
+            videoWrap.classList.remove('loaded');
+        }
+
         function updateVideoQuality(quality) {
             currentQuality = quality;
             const ep = episodes[currentEp];
             const fileId = ep.qualities[quality];
+            showLoading();
             iframe.src = embedUrl(fileId);
             
             // Update active quality button
@@ -287,6 +291,7 @@
             modalTitle.textContent = ep.title;
             epCounter.textContent  = `${index + 1} / ${total}`;
             
+            showLoading();
             const fileId = ep.qualities['720p'];
             iframe.src = embedUrl(fileId);
             
@@ -307,6 +312,7 @@
         function closeModal() {
             modal.classList.remove('active');
             iframe.src = '';
+            showLoading();
             document.body.style.overflow = '';
             document.querySelectorAll('.ep-link').forEach(a => a.classList.remove('ep-active'));
         }

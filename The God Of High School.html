@@ -41,12 +41,12 @@
                 <div class="modal-ep-title" id="modalEpTitle">Episode</div>
                 <button class="modal-close" id="modalClose" title="Close (Esc)">✕</button>
             </div>
-            <div class="modal-video-wrap">
-                <iframe id="modalIframe" title="Anime Video Player" src="" allowfullscreen allow="autoplay"></iframe>
+            <div class="modal-video-wrap" id="videoWrap">
+                <iframe id="modalIframe" title="Anime Video Player" src="" allowfullscreen allow="autoplay; encrypted-media" referrerpolicy="no-referrer-when-downgrade" loading="lazy"></iframe>
             </div>
             <div class="modal-controls">
                 <button class="modal-nav-btn btn-prev" id="btnPrev">◀ Previous</button>
-                <div class="quality-selector" id="qualitySelector">
+                <div class="quality-selector quality-selector--inactive" id="qualitySelector">
                     <button class="quality-btn active" data-quality="720p">720p</button>
                     <button class="quality-btn" data-quality="480p">480p</button>
                     <button class="quality-btn" data-quality="360p">360p</button>
@@ -204,12 +204,17 @@
             return `https://drive.google.com/file/d/${fileId}/preview`;
         }
 
+        const videoWrap = document.getElementById('videoWrap');
+        iframe.addEventListener('load', function () { if (iframe.src) videoWrap.classList.add('loaded'); });
+        function showLoading() { videoWrap.classList.remove('loaded'); }
+
         function openEpisode(index) {
             currentEp = index;
             currentQuality = '720p';
             const ep = episodes[index];
             modalTitle.textContent = `The God Of High School — Season 1 Episode ${index + 1}`;
             epCounter.textContent = `${index + 1} / ${total}`;
+            showLoading();
             iframe.src = embedUrl(ep.id);
             btnPrev.disabled = index === 0;
             btnNext.disabled = index === total - 1;
@@ -228,6 +233,7 @@
         function updateVideoQuality(quality) {
             currentQuality = quality;
             const ep = episodes[currentEp];
+            showLoading();
             iframe.src = embedUrl(ep.id);
             
             // Update active quality button
@@ -260,6 +266,7 @@
         function closeModal() {
             modal.classList.remove('active');
             iframe.src = '';
+            showLoading();
             document.body.style.overflow = '';
             document.querySelectorAll('.ep-link').forEach(a => a.classList.remove('ep-active'));
         }

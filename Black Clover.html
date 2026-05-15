@@ -40,17 +40,17 @@
                 <div class="modal-ep-title" id="modalEpTitle">Episode</div>
                 <button class="modal-close" id="modalClose" title="Close (Esc)">✕</button>
             </div>
-            <div class="modal-video-wrap">
-                <iframe id="modalIframe" title="Anime Video Player" src="" allowfullscreen allow="autoplay"></iframe>
+            <div class="modal-video-wrap" id="videoWrap">
+                <iframe id="modalIframe" title="Anime Video Player" src="" allowfullscreen allow="autoplay; encrypted-media" referrerpolicy="no-referrer-when-downgrade" loading="lazy"></iframe>
             </div>
             <div class="modal-controls">
                 <button class="modal-nav-btn btn-prev" id="btnPrev">◀ Previous</button>
-                <div class="quality-selector" id="qualitySelector">
+                <div class="quality-selector quality-selector--inactive" id="qualitySelector">
                     <button class="quality-btn active" data-quality="720p">720p</button>
                     <button class="quality-btn" data-quality="480p">480p</button>
                     <button class="quality-btn" data-quality="360p">360p</button>
                 </div>
-                <div class="modal-ep-counter" id="epCounter">— / 52</div>
+                <div class="modal-ep-counter" id="epCounter">— / 51</div>
                 <button class="download-btn" id="downloadBtn" title="Download current episode">
                     ⬇ Download
                 </button>
@@ -86,7 +86,7 @@
             <div class="show-info">
                 <h1>BLACK CLOVER</h1>
                 <p>
-                    Season 1 &nbsp;•&nbsp; 52 Episodes &nbsp;•&nbsp; 2017-2021
+                    Season 1 &nbsp;•&nbsp; 51 Episodes &nbsp;•&nbsp; 2017–2021
                 </p>
                 <div class="genre-tags">
                     <span class="genre-tag action">Action</span>
@@ -112,7 +112,7 @@
                         <div class="season-num-badge">1</div>
                         <div>
                             <div class="season-header-title">Season 1</div>
-                            <div class="season-header-meta">52 Episodes &nbsp;·&nbsp; 2024</div>
+                            <div class="season-header-meta">51 Episodes &nbsp;·&nbsp; 2017–2021</div>
                         </div>
                     </div>
                     <span class="season-chevron">▼</span>
@@ -212,6 +212,7 @@
             return m ? `https://drive.google.com/file/d/${m[1]}/preview` : shareUrl;
         }
 
+
         // ─── Build episode list ────────────────────────────────────────────────────
         function buildList(listId, episodes, globalOffset) {
             const ul = document.getElementById(listId);
@@ -254,12 +255,17 @@
         const downloadBtn = document.getElementById('downloadBtn');
         let currentQuality = '720p';
 
+        const videoWrap = document.getElementById('videoWrap');
+        iframe.addEventListener('load', function () { if (iframe.src) videoWrap.classList.add('loaded'); });
+        function showLoading() { videoWrap.classList.remove('loaded'); }
+
         function openEpisode(index) {
             currentEp = index;
             currentQuality = '720p';
             const ep = allEpisodes[index];
             modalTitle.textContent = ep.label;
             epCounter.textContent = `${index + 1} / ${total}`;
+            showLoading();
             iframe.src = embedUrl(ep.url);
             btnPrev.disabled = index === 0;
             btnNext.disabled = index === total - 1;
@@ -278,6 +284,7 @@
         function closeModal() {
             modal.classList.remove('active');
             iframe.src = '';
+            showLoading();
             document.body.style.overflow = '';
             document.querySelectorAll('.ep-link').forEach(a => a.classList.remove('ep-active'));
         }
