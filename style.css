@@ -1609,48 +1609,88 @@ html[data-theme="light"] .episode-list .ep-unavailable {
     object-fit: cover;
   }
 
-  /* ── Modal — fullscreen on mobile portrait ── */
+  /* ═══════════════════════════════════════════════════════════════════
+     MOBILE VIDEO MODAL — OTT-style fullscreen player
+     Redesigned for professional streaming experience on Android/iOS
+     ═══════════════════════════════════════════════════════════════════ */
+
+  /* Modal overlay — fullscreen takeover on mobile */
   .modal-overlay.active {
-    align-items: stretch;
-    justify-content: stretch;
+    align-items: flex-start;
+    justify-content: center;
   }
 
+  /* Modal box — edge-to-edge, uses dynamic viewport for Android Chrome */
   .modal-box {
     width: 100vw;
+    height: 100vh;
+    height: 100dvh; /* Android Chrome address bar safe */
     max-height: 100vh;
     max-height: 100dvh;
     border-radius: 0;
     border: none;
     box-shadow: none;
     animation: modalFadeIn 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    will-change: transform, opacity;
+    contain: layout style;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
   }
 
+  /* Topbar — compact, safe-area aware for notched phones */
   .modal-topbar {
-    padding: 10px 14px;
-    background: rgba(10, 10, 20, 0.95);
-    border-bottom: 1px solid rgba(135, 206, 235, 0.2);
+    padding: 8px 14px;
+    padding-top: max(8px, env(safe-area-inset-top));
+    background: rgba(10, 10, 20, 0.97);
+    border-bottom: 1px solid rgba(135, 206, 235, 0.15);
+    flex-shrink: 0;
+    z-index: 10;
+    /* Auto-hide support */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .modal-topbar.auto-hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
   }
 
   .modal-ep-title {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
+    line-height: 1.3;
   }
 
+  /* Close button — 44px min touch target (Material Design guideline) */
   .modal-close {
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
+    min-width: 44px;
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 1rem;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
 
-  /* Video fills available width, keeps ratio, centered vertically */
+  /* ── Video container — proper 16:9, GPU-composited ── */
   .modal-video-wrap {
     padding-top: 0;
     position: relative;
     width: 100%;
-    /* Calculate height: viewport minus topbar(~58px) minus controls(~110px) */
+    /* 16:9 ratio based on full viewport width */
     height: calc(100vw * 9 / 16);
-    max-height: calc(100dvh - 170px);
-    flex-shrink: 1;
-    flex-grow: 1;
+    max-height: 50vh;
+    max-height: 50dvh;
+    flex-shrink: 0;
+    flex-grow: 0;
+    background: #000;
+    /* GPU acceleration — compositing layer for smooth playback */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    will-change: contents;
   }
 
   .modal-video-wrap iframe {
@@ -1658,99 +1698,135 @@ html[data-theme="light"] .episode-list .ep-unavailable {
     inset: 0;
     width: 100%;
     height: 100%;
+    border: none;
+    /* Prevent iframe from overflowing container */
+    object-fit: contain;
   }
 
-  /* Modal controls — clean two-row layout */
+  /* Loading spinner — optimized for mobile GPU */
+  .modal-video-wrap::before {
+    width: 36px;
+    height: 36px;
+    margin: -18px 0 0 -18px;
+    border-width: 2.5px;
+    will-change: transform;
+  }
+
+  .modal-video-wrap::after {
+    font-size: 0.72rem;
+    top: calc(50% + 28px);
+  }
+
+  /* ── Controls — Netflix/YouTube-style compact grid ── */
   .modal-controls {
-    padding: 10px 14px 14px;
-    gap: 10px;
-    justify-content: center;
+    display: flex;
     flex-direction: column;
-    align-items: stretch;
-    background: rgba(10, 10, 20, 0.95);
-    border-top: 1px solid rgba(135, 206, 235, 0.15);
+    gap: 8px;
+    padding: 10px 14px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+    background: rgba(10, 10, 20, 0.97);
+    border-top: 1px solid rgba(135, 206, 235, 0.12);
+    flex-shrink: 0;
+    flex-grow: 1;
+    z-index: 10;
+    /* Auto-hide support */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
-  /* Row 1: Quality + Episode counter + Download */
-  .modal-controls-row-top {
-    display: contents;
+  .modal-controls.auto-hidden {
+    transform: translateY(100%);
+    opacity: 0;
+    pointer-events: none;
   }
 
+  /* Episode counter — top row, full width */
   .modal-ep-counter {
-    order: 0;
     width: 100%;
     text-align: center;
-    font-size: 0.8rem;
-    padding: 4px 0;
+    font-size: 0.78rem;
+    padding: 6px 0 2px;
     color: rgba(135, 206, 235, 0.7);
     font-weight: 600;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    order: 0;
   }
 
+  /* Quality selector — full width chip row */
   .quality-selector {
     order: 1;
     width: 100%;
+    display: flex;
     justify-content: center;
+    gap: 4px;
     padding: 4px;
-    background: rgba(135, 206, 235, 0.08);
-    border: 1px solid rgba(135, 206, 235, 0.15);
+    background: rgba(135, 206, 235, 0.06);
+    border: 1px solid rgba(135, 206, 235, 0.12);
     border-radius: 10px;
   }
 
   .quality-btn {
     flex: 1;
-    padding: 8px 10px;
+    padding: 9px 8px;
     font-size: 0.72rem;
     text-align: center;
     border-radius: 7px;
+    min-height: 36px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
 
+  /* Navigation buttons — side by side */
+  .btn-prev,
+  .btn-next {
+    flex: 1;
+    justify-content: center;
+    padding: 11px 14px;
+    font-size: 0.82rem;
+    border-radius: 10px;
+    min-height: 44px; /* Touch-friendly */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* Prev/Next in a row using a wrapping trick */
+  .btn-prev { order: 3; }
+  .btn-next { order: 4; }
+
+  /* Download button — full width, prominent */
   .download-btn {
     order: 2;
     width: 100%;
     justify-content: center;
-    padding: 10px 14px;
+    padding: 11px 14px;
     font-size: 0.82rem;
     border-radius: 10px;
+    min-height: 44px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
 
-  /* Row 2: Prev / Next buttons */
-  .btn-prev {
-    order: 3;
-    flex: 1;
-    justify-content: center;
-    padding: 10px 14px;
-    font-size: 0.82rem;
-    border-radius: 10px;
-  }
-
-  .btn-next {
-    order: 4;
-    flex: 1;
-    justify-content: center;
-    padding: 10px 14px;
-    font-size: 0.82rem;
-    border-radius: 10px;
-  }
-
-  /* Nav buttons side by side */
+  /* Use CSS Grid for clean control layout */
   .modal-controls {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: auto;
+    gap: 8px;
+    align-items: stretch;
   }
 
-  .modal-ep-counter {
-    grid-column: 1 / -1;
-  }
-
-  .quality-selector {
-    grid-column: 1 / -1;
-  }
-
+  /* Full-width items span both columns */
+  .modal-ep-counter,
+  .quality-selector,
   .download-btn {
     grid-column: 1 / -1;
   }
+
+  /* Prev/Next each take one column */
+  .btn-prev { grid-column: 1 / 2; }
+  .btn-next { grid-column: 2 / 3; }
 
   /* Season accordion */
   .season-header {
@@ -1866,29 +1942,43 @@ html[data-theme="light"] .episode-list .ep-unavailable {
     border-radius: 8px;
   }
 
-  /* Video modal — extra tight on small phones */
+  /* ═══ Small phone video modal refinements ═══ */
   .modal-video-wrap {
-    max-height: calc(100dvh - 200px);
+    /* On small phones, cap height to leave room for controls */
+    max-height: 45dvh;
   }
 
   .modal-controls {
-    padding: 8px 10px 12px;
-    gap: 8px;
+    padding: 8px 10px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+    gap: 6px;
   }
 
   .quality-btn {
-    padding: 7px 8px;
-    font-size: 0.68rem;
+    padding: 7px 6px;
+    font-size: 0.65rem;
+    min-height: 34px;
   }
 
   .btn-prev,
   .btn-next {
-    padding: 9px 12px;
+    padding: 9px 10px;
     font-size: 0.78rem;
+    min-height: 42px;
   }
 
   .download-btn {
-    padding: 9px 12px;
+    padding: 9px 10px;
+    font-size: 0.78rem;
+    min-height: 42px;
+  }
+
+  .modal-ep-counter {
+    font-size: 0.72rem;
+    padding: 4px 0 0;
+  }
+
+  .modal-ep-title {
     font-size: 0.78rem;
   }
 
@@ -1915,12 +2005,57 @@ html[data-theme="light"] .episode-list .ep-unavailable {
 
   .nav-links a { font-size: 0.9rem; }
 
+  /* ═══ Tiny phone modal — ultra-compact ═══ */
   .modal-video-wrap {
-    max-height: calc(100dvh - 220px);
+    max-height: 40dvh;
+  }
+
+  .modal-controls {
+    padding: 6px 8px;
+    padding-bottom: max(6px, env(safe-area-inset-bottom));
+    gap: 5px;
+  }
+
+  .quality-btn {
+    padding: 6px 4px;
+    font-size: 0.62rem;
+    min-height: 32px;
+  }
+
+  .btn-prev,
+  .btn-next {
+    padding: 8px;
+    font-size: 0.72rem;
+    min-height: 40px;
+  }
+
+  .download-btn {
+    padding: 8px;
+    font-size: 0.72rem;
+    min-height: 40px;
+  }
+
+  .modal-topbar {
+    padding: 6px 10px;
+    padding-top: max(6px, env(safe-area-inset-top));
+  }
+
+  .modal-ep-title {
+    font-size: 0.72rem;
+  }
+
+  .modal-close {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    font-size: 0.9rem;
   }
 }
 
-/* ── Mobile Landscape — maximize video area ── */
+/* ═══════════════════════════════════════════════════════════════════
+   LANDSCAPE MODE — maximize video, minimal controls
+   ═══════════════════════════════════════════════════════════════════ */
 @media (max-width: 900px) and (orientation: landscape) {
   .modal-overlay.active {
     align-items: stretch;
@@ -1929,67 +2064,141 @@ html[data-theme="light"] .episode-list .ep-unavailable {
 
   .modal-box {
     width: 100vw;
+    height: 100vh;
+    height: 100dvh;
     max-height: 100vh;
     max-height: 100dvh;
     border-radius: 0;
     border: none;
+    flex-direction: column;
+    overflow: hidden;
   }
 
+  /* Topbar — ultra-slim in landscape */
   .modal-topbar {
-    padding: 6px 14px;
+    padding: 4px 14px;
+    padding-left: max(14px, env(safe-area-inset-left));
+    padding-right: max(14px, env(safe-area-inset-right));
   }
 
   .modal-ep-title {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
 
   .modal-close {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
   }
 
+  /* Video — maximize to fill available height */
   .modal-video-wrap {
     padding-top: 0;
-    height: calc(100dvh - 100px);
-    max-height: none;
+    height: 0;
     flex-grow: 1;
+    flex-shrink: 1;
+    max-height: none;
   }
 
+  /* Controls — single horizontal row, slim */
   .modal-controls {
-    padding: 6px 12px;
-    gap: 6px;
-    flex-wrap: nowrap;
+    display: flex;
     flex-direction: row;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: space-between;
+    gap: 6px;
+    padding: 5px 12px;
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+    padding-bottom: max(5px, env(safe-area-inset-bottom));
+    flex-shrink: 0;
+    flex-grow: 0;
+    overflow: visible;
+  }
+
+  /* Reset grid from portrait */
+  .modal-controls {
+    grid-template-columns: none;
+  }
+
+  /* All items flow naturally in row */
+  .modal-ep-counter,
+  .quality-selector,
+  .download-btn,
+  .btn-prev,
+  .btn-next {
+    order: unset;
+    grid-column: unset;
+    width: auto;
   }
 
   .modal-ep-counter {
-    width: auto;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
+    padding: 0;
+    text-transform: none;
+    white-space: nowrap;
+  }
+
+  .quality-selector {
+    padding: 2px;
+    gap: 2px;
   }
 
   .quality-btn {
-    padding: 4px 8px;
-    font-size: 0.65rem;
+    padding: 4px 7px;
+    font-size: 0.62rem;
+    min-height: 28px;
   }
 
   .btn-prev,
   .btn-next {
-    padding: 6px 10px;
-    font-size: 0.75rem;
+    padding: 5px 10px;
+    font-size: 0.72rem;
+    min-height: 34px;
+    flex: none;
   }
 
   .download-btn {
-    padding: 6px 10px;
-    font-size: 0.72rem;
+    padding: 5px 10px;
+    font-size: 0.68rem;
+    min-height: 34px;
   }
 }
 
-/* ── Prevent horizontal scroll on mobile ── */
+/* ═══════════════════════════════════════════════════════════════════
+   MOBILE VIEWPORT SAFETY & TOUCH OPTIMIZATION
+   ═══════════════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
+  /* Prevent horizontal scroll */
   html, body {
     overflow-x: hidden;
+    overscroll-behavior-x: none;
+  }
+
+  /* Prevent zoom on double-tap for all interactive elements */
+  button, a, input, select, textarea, [role="button"] {
+    touch-action: manipulation;
+  }
+
+  /* Disable text selection during touch interactions on modal */
+  .modal-overlay {
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: none;
+  }
+
+  /* GPU acceleration for smooth scrolling on mobile */
+  .modal-box {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  /* Content-visibility optimization for off-screen season blocks */
+  .season-body:not(.open) {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 200px;
   }
 }
 

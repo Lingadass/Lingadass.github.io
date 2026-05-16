@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Solo Leveling — αηιмєѕ தமிழ்</title>
     <meta name="description" content="Watch Solo Leveling Season 1 & Season 2 all episodes in Tamil on αηιмєѕ தமிழ்.">
     <link rel="stylesheet" href="style.css">
@@ -375,6 +375,88 @@
 
 
 
+    <!-- --- MOBILE ENHANCEMENTS � auto-hide controls, touch optimization --- -->
+    <script>
+        (function() {
+            var isMobile = /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                           (window.matchMedia('(pointer: coarse)').matches && window.innerWidth <= 1024);
+            if (isMobile) document.body.classList.add('is-mobile');
+
+            var modalEl = document.getElementById('videoModal');
+            var topbarEl = modalEl ? modalEl.querySelector('.modal-topbar') : null;
+            var controlsEl = modalEl ? modalEl.querySelector('.modal-controls') : null;
+            var videoWrapEl = document.getElementById('videoWrap');
+            if (!modalEl || !topbarEl || !controlsEl || !videoWrapEl) return;
+
+            var hideTimer = null;
+            var HIDE_DELAY = 3000;
+
+            function showCtrl() {
+                topbarEl.classList.remove('auto-hidden');
+                controlsEl.classList.remove('auto-hidden');
+            }
+
+            function hideCtrl() {
+                if (!isMobile) return;
+                topbarEl.classList.add('auto-hidden');
+                controlsEl.classList.add('auto-hidden');
+            }
+
+            function resetTimer() {
+                showCtrl();
+                clearTimeout(hideTimer);
+                if (isMobile && modalEl.classList.contains('active')) {
+                    hideTimer = setTimeout(hideCtrl, HIDE_DELAY);
+                }
+            }
+
+            ['touchstart', 'touchmove', 'mousemove', 'click'].forEach(function(evt) {
+                modalEl.addEventListener(evt, resetTimer, { passive: true });
+            });
+
+            videoWrapEl.addEventListener('click', function(e) {
+                if (!isMobile) return;
+                if (e.target.tagName === 'IFRAME') return;
+                if (topbarEl.classList.contains('auto-hidden')) {
+                    resetTimer();
+                } else {
+                    hideCtrl();
+                    clearTimeout(hideTimer);
+                }
+            });
+
+            var resizeTimer;
+            function handleResize() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    if (videoWrapEl && modalEl.classList.contains('active')) {
+                        videoWrapEl.style.display = 'none';
+                        void videoWrapEl.offsetHeight;
+                        videoWrapEl.style.display = '';
+                    }
+                }, 150);
+            }
+            window.addEventListener('orientationchange', handleResize);
+            window.addEventListener('resize', handleResize);
+
+            // Hook into openEpisode/closeModal to manage timer
+            var _origModal = document.getElementById('videoModal');
+            if (_origModal) {
+                new MutationObserver(function(mutations) {
+                    mutations.forEach(function(m) {
+                        if (m.attributeName === 'class') {
+                            if (_origModal.classList.contains('active')) {
+                                resetTimer();
+                            } else {
+                                clearTimeout(hideTimer);
+                                showCtrl();
+                            }
+                        }
+                    });
+                }).observe(_origModal, { attributes: true, attributeFilter: ['class'] });
+            }
+        })();
+    </script>
 </body>
 
 </html>
